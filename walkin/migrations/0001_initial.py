@@ -57,26 +57,6 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'walkin', ['ClinicalFinding'])
 
-        # Adding model 'Walkin_hiv_declined_reason'
-        db.create_table(u'walkin_walkin_hiv_declined_reason', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
-        ))
-        db.send_create_signal(u'walkin', ['Walkin_hiv_declined_reason'])
-
-        # Adding model 'WalkinTest'
-        db.create_table(u'walkin_walkintest', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('consistency_token', self.gf('django.db.models.fields.CharField')(max_length=8)),
-            ('episode', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['opal.Episode'], null=True)),
-            ('hiv_test', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
-            ('stool_ocp', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
-            ('malaria_film', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
-            ('hiv_declined_reason_fk', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['walkin.Walkin_hiv_declined_reason'], null=True, blank=True)),
-            ('hiv_declined_reason_ft', self.gf('django.db.models.fields.CharField')(default='', max_length=255, null=True, blank=True)),
-        ))
-        db.send_create_signal(u'walkin', ['WalkinTest'])
-
         # Adding model 'Management_follow_up'
         db.create_table(u'walkin_management_follow_up', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -104,6 +84,7 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'walkin', ['Management'])
 
+
     def backwards(self, orm):
         # Deleting model 'Symptom'
         db.delete_table(u'walkin_symptom')
@@ -116,12 +97,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'ClinicalFinding'
         db.delete_table(u'walkin_clinicalfinding')
-
-        # Deleting model 'Walkin_hiv_declined_reason'
-        db.delete_table(u'walkin_walkin_hiv_declined_reason')
-
-        # Deleting model 'WalkinTest'
-        db.delete_table(u'walkin_walkintest')
 
         # Deleting model 'Management_follow_up'
         db.delete_table(u'walkin_management_follow_up')
@@ -232,22 +207,6 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'symptom_fk': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['opal.Symptom']", 'null': 'True', 'blank': 'True'}),
             'symptom_ft': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'})
-        },
-        u'walkin.walkin_hiv_declined_reason': {
-            'Meta': {'ordering': "['name']", 'object_name': 'Walkin_hiv_declined_reason'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
-        },
-        u'walkin.walkintest': {
-            'Meta': {'object_name': 'WalkinTest'},
-            'consistency_token': ('django.db.models.fields.CharField', [], {'max_length': '8'}),
-            'episode': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['opal.Episode']", 'null': 'True'}),
-            'hiv_declined_reason_fk': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['walkin.Walkin_hiv_declined_reason']", 'null': 'True', 'blank': 'True'}),
-            'hiv_declined_reason_ft': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'hiv_test': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'malaria_film': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
-            'stool_ocp': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'})
         }
     }
 

@@ -82,26 +82,5 @@
         },
         "model": "walkin.findings_rash_distribution",
         "pk": 3
-    },
-    {
-        "fields": {
-            "name": "Declined Reason 1"
-        },
-        "model": "walkin.walkin_hiv_declined_reason",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "name": "Declined Reason 2"
-        },
-        "model": "walkin.walkin_hiv_declined_reason",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "name": "Declined Reason 3"
-        },
-        "model": "walkin.walkin_hiv_declined_reason",
-        "pk": 3
     }
 ]

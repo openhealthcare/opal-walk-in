@@ -41,16 +41,6 @@ class ClinicalFinding(EpisodeSubrecord):
     neurological = models.CharField(max_length=255, blank=True, null=True)
 
 
-HivDeclinedLookupList = type(*lookup_list('walkin_hiv_declined_reason', module=__name__))
-
-class WalkinTest(EpisodeSubrecord):
-    _title = 'Walk-in Tests'
-    hiv_test = models.CharField(max_length=20, blank=True)
-    hiv_declined_reason = ForeignKeyOrFreeText(HivDeclinedLookupList)
-    stool_ocp = models.CharField(max_length=20, blank=True)
-    malaria_film = models.CharField(max_length=20, blank=True)
-
-
 FollowUpLookupList = type(*lookup_list('management_follow_up', module=__name__))
 ClinicLookupList = type(*lookup_list('management_clinics', module=__name__))
 

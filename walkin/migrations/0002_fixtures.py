@@ -119,22 +119,6 @@ class Migration(DataMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'symptom_fk': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['opal.Symptom']", 'null': 'True', 'blank': 'True'}),
             'symptom_ft': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'})
-        },
-        u'walkin.walkin_hiv_declined_reason': {
-            'Meta': {'ordering': "['name']", 'object_name': 'Walkin_hiv_declined_reason'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
-        },
-        u'walkin.walkintest': {
-            'Meta': {'object_name': 'WalkinTest'},
-            'consistency_token': ('django.db.models.fields.CharField', [], {'max_length': '8'}),
-            'episode': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['opal.Episode']", 'null': 'True'}),
-            'hiv_declined_reason_fk': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['walkin.Walkin_hiv_declined_reason']", 'null': 'True', 'blank': 'True'}),
-            'hiv_declined_reason_ft': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'hiv_test': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'malaria_film': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
-            'stool_ocp': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'})
         }
     }
 
