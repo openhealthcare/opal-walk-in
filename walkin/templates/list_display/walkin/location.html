@@ -1,0 +1,16 @@
+[[item.category]]<br />
+<span ng-hide="item.hospital=='UCH'">[[item.hospital]] </span>
+[[item.ward]] [[item.bed]]<br />
+Admitted: [[row.date_of_admission | shortDate]]
+<span ng-show="row.discharge_date">
+  Discharged [[row.discharge_date | shortDate]]
+</span>
+<br />
+<a
+   class="screen-only btn btn-primary" href="#"
+   ng-click="dischargeEpisode($parent.$index, $event)">
+  <span ng-show="currentSubTag == 'triage'" >Next</span>
+  <span ng-show="currentSubTag == 'doctor'" >End of appointment</span>
+  <i class="glyphicon glyphicon-ok"></i>
+</a>
+

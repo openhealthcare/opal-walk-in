@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">×</button>
+  <h3>Walk-in Next Stage</h3>
+</div>
+<div class="modal-body">
+
+  <!-- Initial State -->
+  <div ng-show="episode.tagging[0].triage == true && meta.accepted == null">
+    <p>Accept onto walk-in service?</p>
+    <center>
+      <button class="btn btn-primary btn-lg" ng-click="meta.accepted = true">Doctor-led care</button>
+      <button class="btn btn-primary btn-lg"  ng-click="meta.accepted = false">Nurse-led care</button>
+    </center>
+  </div>
+
+  <div ng-show="episode.tagging[0].triage == true && meta.accepted == true">
+    <p>Are you sure?</p>
+    <center>
+      <button class="btn btn-primary btn-lg"  ng-click="move_to_doctor()">Move to doctor</button>
+    </center>
+  </div>
+
+  <div ng-show="episode.tagging[0].triage == true && meta.accepted == false">
+    <p>How did you treat this patient?</p>
+    <center>
+      <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">Modal to be completed</button>
+    </center>
+  </div>
+
+
+  <div ng-show="episode.tagging[0].doctor == true && meta.rejected == null">
+    <p>Walk-in appointment completed?</p>
+    <center>
+      <button class="btn btn-primary btn-lg" ng-click="meta.rejected = true">End of appointment</button>
+    </center>
+  </div>
+
+  <div ng-show="episode.tagging[0].doctor == true && meta.rejected == true">
+    <p>How did you treat this patient?</p>
+    <center>
+      <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">Modal to be completed</button>
+    </center>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn" ng-click="cancel()">Cancel</button>
+</div>

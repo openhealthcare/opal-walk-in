@@ -22,24 +22,38 @@
     },
     {
         "fields": {
-            "name": "Clinic 1"
+            "name": "General infection clinic (Doherty, Moore, Maybe, Whitty, Bailey)"
         },
         "model": "walkin.management_clinics",
         "pk": 1
     },
     {
         "fields": {
-            "name": "Clinic 2"
+            "name": "Tropical dermatology clinic (FVL)"
         },
         "model": "walkin.management_clinics",
         "pk": 2
     },
     {
         "fields": {
-            "name": "Clinic 3"
+            "name": "Leishmania clinic (DL)"
         },
         "model": "walkin.management_clinics",
         "pk": 3
+    },
+    {
+        "fields": {
+            "name": "Parasitology clinic (PLC)"
+        },
+        "model": "walkin.management_clinics",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "name": "Mortimer Market Centre (for HIV/GUM referrals)"
+        },
+        "model": "walkin.management_clinics",
+        "pk": 5
     },
     {
         "fields": {
