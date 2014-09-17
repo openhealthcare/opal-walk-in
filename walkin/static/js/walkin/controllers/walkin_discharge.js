@@ -37,8 +37,8 @@ controllers.controller(
         $scope.move_to_doctor = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
-            tagging.triage = false;
-            tagging.doctor = true;
+            tagging.walkin_triage = false;
+            tagging.walkin_doctor = true;
 
             $scope.episode.tagging[0].save(tagging).then(function(){
                 $modalInstance.close('discharged');
@@ -52,8 +52,8 @@ controllers.controller(
         $scope.remove_from_list = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
-            tagging.triage = false;
-            tagging.doctor = false;
+            tagging.walkin_triage = false;
+            tagging.walkin_doctor = false;
 
             $scope.episode.tagging[0].save(tagging).then(function(){
                 $modalInstance.close('discharged');

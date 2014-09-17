@@ -28,7 +28,7 @@ controllers.controller(
             var teams = episode.tagging[0].makeCopy();
             var location = episode.location[0].makeCopy();
             teams.walkin = true;
-            teams.triage = true;
+            teams.walkin_triage = true;
             location.category = 'Walkin';
 
             //
