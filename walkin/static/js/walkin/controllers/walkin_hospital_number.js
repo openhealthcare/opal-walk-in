@@ -8,7 +8,7 @@ controllers.controller(
              Episode){
 
         $scope.model = {
-            hospital_number : null
+            hospitalNumber : null
         }
         $scope.patient = null;
 
@@ -58,7 +58,7 @@ controllers.controller(
         //
         $scope.findByHospitalNumber = function(){
             Episode.findByHospitalNumber(
-                $scope.model.hospital_number,
+                $scope.model.hospitalNumber,
                 {
                     newPatient: $scope.new_patient,
                     newForPatient: $scope.new_for_patient,
@@ -85,7 +85,7 @@ controllers.controller(
           schema: function() { return schema; },
           options: function() { return options; },
           demographics: function() {
-            return { hospital_number: $scope.hospital_number }
+            return { hospital_number: $scope.hospitalNumber }
           }
         }
       }).result.then(function(result) {
