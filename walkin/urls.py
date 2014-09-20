@@ -1,5 +1,5 @@
 """
-Urls for the OPAL observations plugin
+Urls for the OPAL Walk In plugin
 """
 from django.conf.urls import patterns, url
 
