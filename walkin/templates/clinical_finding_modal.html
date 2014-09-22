@@ -164,3 +164,19 @@
     </div>
 </form>
 {% endblock %}
+
+{% block pop_buttons %}
+<button class="btn pull-left"
+              ng-click="prepopulate($event)"
+              data-cervical_lymphadenopathy="N"
+              data-inguinal_lymphadenopathy="N"
+              data-jaundice="N"
+              data-dehydrated="N"
+              data-rash="N"
+              data-cardiovascular="NAD"
+              data-respiratory="NAD"
+              data-abdominal="NAD"
+              data-oropharnyx="NAD"
+              data-neurological="NAD"
+              ><i class="fa fa-file-text"></i> NAD</button>
+{% endblock %}
