@@ -39,6 +39,7 @@ class ClinicalFinding(EpisodeSubrecord):
     abdominal = models.CharField(max_length=255, blank=True, null=True)
     oropharnyx = models.CharField(max_length=255, blank=True, null=True)
     neurological = models.CharField(max_length=255, blank=True, null=True)
+    other_findings = models.CharField(max_length=255, blank=True, null=True)
 
 
 FollowUpLookupList = type(*lookup_list('management_follow_up', module=__name__))
