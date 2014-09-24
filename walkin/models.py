@@ -49,4 +49,5 @@ class Management(EpisodeSubrecord):
     follow_up = ForeignKeyOrFreeText(FollowUpLookupList)
     follow_up_clinic = ForeignKeyOrFreeText(ClinicLookupList)
     date_of_appointment = models.DateField(null=True, blank=True)
+    advice = models.CharField(max_length=255, blank=True, null=True)
 
