@@ -79,7 +79,7 @@ controllers.controller(
       // Show user the form for creating a new episode,
             // with the hospital number pre-populated
       modal = $modal.open({
-        templateUrl: '/templates/modals/add_episode_without_teams.html/',
+        templateUrl: '/templates/modals/add_walkin_episode.html/',
         controller: 'AddEpisodeCtrl',
         resolve: {
           schema: function() { return schema; },
@@ -146,7 +146,7 @@ controllers.controller(
         demographics.date_of_birth = dob;
             }
       modal = $modal.open({
-        templateUrl: '/templates/modals/add_episode.html/',
+        templateUrl: '/templates/modals/add_walkin_episode.html/',
         controller: 'AddEpisodeCtrl',
         resolve: {
           schema: function() { return schema; },
