@@ -2,46 +2,35 @@
 {% block modal_body %}
 <form class="form-horizontal">
     <div class="form-group">
-        <label class="control-label col-sm-3">Cervical lymphadenopathy</label>
+        <label class="control-label col-sm-3">Lymphadenopathy</label>
         <div class="col-sm-8">
 
             <label class="radio-inline">
-                <input class="" type="radio" value="Y" ng-model="editing.cervical_lymphadenopathy">
+                <input class="" type="radio" value="Y" ng-model="editing.lymphadenopathy">
                 Yes
             </label>
 
             <label class="radio-inline">
-                <input class="" type="radio" value="N" ng-model="editing.cervical_lymphadenopathy">
+                <input class="" type="radio" value="N" ng-model="editing.lymphadenopathy">
                 No
             </label>
 
             <label class="radio-inline">
-                <input class="" type="radio" value="NAD" ng-model="editing.cervical_lymphadenopathy">
+                <input class="" type="radio" value="NAD" ng-model="editing.lymphadenopathy">
                 Not assessed
             </label>
         </div>
     </div>
 
-    <div class="form-group">
-        <label class="control-label col-sm-3">Inguinal lymphadenopathy</label>
-        <div class="col-sm-8">
-
-            <label class="radio-inline">
-                <input class="" type="radio" value="Y" ng-model="editing.inguinal_lymphadenopathy">
-                Yes
-            </label>
-
-            <label class="radio-inline">
-                <input class="" type="radio" value="N" ng-model="editing.inguinal_lymphadenopathy">
-                No
-            </label>
-
-            <label class="radio-inline">
-                <input class="" type="radio" value="NAD" ng-model="editing.inguinal_lymphadenopathy">
-                Not assessed
-            </label>
+    <span ng-show="editing.lymphadenopathy == 'Y'">
+        <div class="form-group">
+            <label class="control-label col-sm-3">Details</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text"
+                     ng-model="editing.lymphadenopathy_details">
+            </div>
         </div>
-    </div>
+    </span>
 
     <div class="form-group">
         <label class="control-label col-sm-3">Jaundice</label>
@@ -162,14 +151,20 @@
             <input type="text" class="form-control" ng-model="editing.neurological">
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-3">Other findings</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" ng-model="editing.other_findings">
+        </div>
+    </div>
 </form>
 {% endblock %}
 
 {% block pop_buttons %}
 <button class="btn pull-left"
               ng-click="prepopulate($event)"
-              data-cervical_lymphadenopathy="N"
-              data-inguinal_lymphadenopathy="N"
+              data-lymphadenopathy="N"
               data-jaundice="N"
               data-dehydrated="N"
               data-rash="N"
@@ -178,5 +173,6 @@
               data-abdominal="NAD"
               data-oropharnyx="NAD"
               data-neurological="NAD"
+              data-other_findings="NAD"
               ><i class="fa fa-file-text"></i> NAD</button>
 {% endblock %}

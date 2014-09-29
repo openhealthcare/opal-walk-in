@@ -23,10 +23,12 @@ class Symptom(EpisodeSubrecord):
 RashTypeLookupList = type(*lookup_list('findings_rash_type', module=__name__))
 RashDistributionLookupList = type(*lookup_list('findings_rash_distribution', module=__name__))
 
-class ClinicalFinding(EpisodeSubrecord):
+class ClinicalFindings(EpisodeSubrecord):
+    _is_singleton = True
     _title = 'Clinical Findings'
-    cervical_lymphadenopathy = models.CharField(max_length=20, blank=True)
-    inguinal_lymphadenopathy = models.CharField(max_length=20, blank=True)
+
+    lymphadenopathy = models.CharField(max_length=20, blank=True, null=True)
+    lymphadenopathy_details = models.CharField(max_length=255, blank=True, null=True)
     jaundice = models.CharField(max_length=20, blank=True)
     dehydrated = models.CharField(max_length=20, blank=True)
 
