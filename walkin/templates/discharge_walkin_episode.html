@@ -27,21 +27,67 @@
     </center>
   </div>
 
-
-  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.rejected == null">
-    <p>Walk-in appointment completed?</p>
+  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == null">
+    <p>Walk-in appointment completed. Outstanding result?</p>
     <center>
-      <button class="btn btn-primary btn-lg" ng-click="meta.rejected = true">End of appointment</button>
+      <button class="btn btn-primary btn-lg" ng-click="meta.next = 'outstanding'">Outstanding result</button>
+      <button class="btn btn-primary btn-lg"  ng-click="meta.next = 'no_outstanding'">No outstanding result</button>
+      <button class="btn btn-primary btn-lg"  ng-click="meta.next = 'admit'">Admit to ward</button>
     </center>
   </div>
 
-  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.rejected == true">
-    <p>How did you treat this patient?</p>
+  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'outstanding'">
+    <p>Are you sure?</p>
     <center>
-      <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">Modal to be completed</button>
+      <button class="btn btn-primary btn-lg"  ng-click="move_to_review()">Move to review</button>
+    </center>
+  </div>
+  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'no_outstanding'">
+    <p>Are you sure?</p>
+    <center>
+      <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">Remove from list</button>
+    </center>
+  </div>
+  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'admit'">
+    <p>Admit to which team?</p>
+
+    {% if teams %}
+    <div class="control-group">
+      <label>Teams</label>
+      <div >
+  {% for team in teams %}{% if not team.parent %}{% if team.direct_add %}
+          {% if team.has_subtags %}
+            <h4>{{team.title}}:</h4>
+              {% for subteam in team.team_set.all %}
+          <label class="checkbox">
+            <input type="checkbox" ng-model="editing.tagging[0].{{subteam.name}}">
+            {{subteam.title}}
+          </label>
+              {% endfor %}
+          {% else %}
+            <h4>{{team.title}}:</h4>
+      <label class="checkbox">
+        <input type="checkbox" ng-model="editing.tagging[0].{{team.name}}">
+        {{team.title}}
+      </label>
+          {% endif %}
+        {% endif %}{% endif %}{% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div ng-show="episode.tagging[0].walkin_review == true">
+    <p>To be completed</p>
+    <center>
+      <button class="btn btn-primary btn-lg" ng-click="remove_from_list()">Has Consultant Outpatient Appointment</button>
+      <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">All results back</button>
     </center>
   </div>
 </div>
 <div class="modal-footer">
+  <span ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'admit'">
+    <button class="btn btn-primary" ng-click="admit_to_ward()">Admit to ward</button>
+  </span>
   <button class="btn" ng-click="cancel()">Cancel</button>
 </div>

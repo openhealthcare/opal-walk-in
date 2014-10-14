@@ -8,6 +8,7 @@ controllers.controller(
              options, episode, tags){
 
         $scope.episode = episode;
+        $scope.episode.tagging[0] = $scope.episode.tagging[0].makeCopy();
         $scope.meta = {
             accepted: null
         };
@@ -30,10 +31,6 @@ controllers.controller(
             return
         };
 
-        //
-        // The patient is being removed from the current list because they've
-        // switched to oral antibiotics
-        //
         $scope.move_to_doctor = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
@@ -45,15 +42,36 @@ controllers.controller(
             });
         }
 
-        //
-        // The patient is being removed from the current list because they've
-        // switched to oral antibiotics
-        //
+        $scope.move_to_review = function(){
+            $scope.ensure_tagging($scope.episode);
+            var tagging = $scope.episode.tagging[0].makeCopy();
+            tagging.walkin_doctor = false;
+            tagging.walkin_review = true;
+
+            $scope.episode.tagging[0].save(tagging).then(function(){
+                $modalInstance.close('discharged');
+            });
+        }
+
         $scope.remove_from_list = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
             tagging.walkin_triage = false;
             tagging.walkin_doctor = false;
+
+            $scope.episode.tagging[0].save(tagging).then(function(){
+                $modalInstance.close('discharged');
+            });
+        }
+
+        $scope.admit_to_ward = function(){
+            $scope.ensure_tagging($scope.episode);
+            var tagging = $scope.episode.tagging[0].makeCopy();
+            tagging.walkin = false;
+            tagging.walkin_doctor = false;
+            // what sort of inpatient should they be?
+            // show modal with possible tags?
+            tagging.mine = true;
 
             $scope.episode.tagging[0].save(tagging).then(function(){
                 $modalInstance.close('discharged');
