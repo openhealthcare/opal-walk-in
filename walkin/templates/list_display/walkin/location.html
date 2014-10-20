@@ -8,9 +8,10 @@ Admitted: [[row.date_of_admission | shortDate]]
 <br />
 <a
    class="screen-only btn btn-primary" href="#"
+   style="text-align: left;"
    ng-click="dischargeEpisode($parent.$index, $event)">
   <span ng-show="currentSubTag == 'walkin_triage'" >Next</span>
-  <span ng-show="currentSubTag == 'walkin_doctor'" >End of appointment</span>
+  <span ng-show="currentSubTag == 'walkin_doctor'" >End of<br>appointment</span>
   <span ng-show="currentSubTag == 'walkin_review'" >Results actioned</span>
   <i class="glyphicon glyphicon-ok"></i>
 </a>
