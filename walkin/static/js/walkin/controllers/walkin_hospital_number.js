@@ -28,10 +28,10 @@ controllers.controller(
             // Pre fill some tests:
             //
             var stool_ocp = episode.newItem('microbiology_test',
-                                       {column: $rootScope.fields.microbiology_test});
+                                            {column: $rootScope.fields.microbiology_test});
 
             var malaria_film = episode.newItem('microbiology_test',
-                                       {column: $rootScope.fields.microbiology_test});
+                                               {column: $rootScope.fields.microbiology_test});
 
             $q.all([
                 episode.save(ep),
@@ -56,8 +56,8 @@ controllers.controller(
                     newPatient: $scope.new_patient,
                     newForPatient: $scope.new_for_patient,
                     error: function(){
-                  // This shouldn't happen, but we should probably handle it better
-                  alert('ERROR: More than one patient found with hospital number');
+                        // This shouldn't happen, but we should probably handle it better
+                        alert('ERROR: More than one patient found with hospital number');
                         $modalInstance.close(null)
                     }
                 }
@@ -68,27 +68,27 @@ controllers.controller(
         // Create a new patient
         //
         $scope.new_patient = function(result){
-      // There is no patient with this hospital number
-      // Show user the form for creating a new episode,
+            // There is no patient with this hospital number
+            // Show user the form for creating a new episode,
             // with the hospital number pre-populated
-      modal = $modal.open({
-        templateUrl: '/templates/modals/add_walkin_episode.html/',
-        controller: 'AddEpisodeCtrl',
-        resolve: {
-          schema: function() { return schema; },
-          options: function() { return options; },
-          demographics: function() {
-            return { hospital_number: $scope.model.hospitalNumber }
-          }
-        }
-      }).result.then(function(result) {
-        // The user has created the episode, or cancelled
+            modal = $modal.open({
+                templateUrl: '/templates/modals/add_walkin_episode.html/',
+                controller: 'AddEpisodeCtrl',
+                resolve: {
+                    schema: function() { return schema; },
+                    options: function() { return options; },
+                    demographics: function() {
+                        return { hospital_number: $scope.model.hospitalNumber }
+                    }
+                }
+            }).result.then(function(result) {
+                // The user has created the episode, or cancelled
                 if(result){ // We made an episode!
                     $scope.tag_and_close(result);
                 }else{
-            $modalInstance.close(result);
+                    $modalInstance.close(result);
                 }
-      });
+            });
         };
 
         //
@@ -96,33 +96,7 @@ controllers.controller(
         //
         $scope.new_for_patient = function(patient){
             if(patient.active_episode_id && _.keys(patient.episodes).length > 0){
-              alert('This walkin patient is a current inpatient!');
-        //         // Offer to import the data from this episode.
-        // for (var eix in patient.episodes) {
-        //   patient.episodes[eix] = new Episode(patient.episodes[eix], schema);
-        // };
-        // modal = $modal.open({
-        //   templateUrl: '/templates/modals/reopen_episode.html/',
-        //   controller: 'ReopenEpisodeCtrl',
-        //   resolve: {
-        //     patient: function() { return patient; },
-        //   }
-        // }).result.then(
-        //             function(result) {
-        //                 if(!_.isString(result)){
-        //                     $scope.tag_and_close(result);
-        //                     return
-        //                 };
-        //       var demographics;
-        //       if (result == 'open-new') {
-        //         // User has chosen to open a new episode
-        //                     $scope.add_for_patient(patient);
-        //       } else {
-        //         // User has chosen to reopen an episode, or cancelled
-        //         $modalInstance.close(result);
-        //       };
-        //     },
-        //             function(result){ $modalInstance.close(result); });
+                alert('This walkin patient is a current inpatient!');
             }else{
                 $scope.add_for_patient(patient);
             };
@@ -136,29 +110,29 @@ controllers.controller(
             if(demographics.date_of_birth){
                 var dob = moment(demographics.date_of_birth, 'YYYY-MM-DD')
                     .format('DD/MM/YYYY');
-        demographics.date_of_birth = dob;
+                demographics.date_of_birth = dob;
             }
-      modal = $modal.open({
-        templateUrl: '/templates/modals/add_walkin_episode.html/',
-        controller: 'AddEpisodeCtrl',
-        resolve: {
-          schema: function() { return schema; },
-          options: function() { return options; },
-          demographics: function() { return demographics; }
-        }
-      }).result.then(function(result) {
-        // The user has created the episode, or cancelled
+            modal = $modal.open({
+                templateUrl: '/templates/modals/add_walkin_episode.html/',
+                controller: 'AddEpisodeCtrl',
+                resolve: {
+                    schema: function() { return schema; },
+                    options: function() { return options; },
+                    demographics: function() { return demographics; }
+                }
+            }).result.then(function(result) {
+                // The user has created the episode, or cancelled
                 if(result){ // We made an episode!
                     $scope.tag_and_close(result);
                 }else{
-            $modalInstance.close(result);
+                    $modalInstance.close(result);
                 }
-      });
+            });
         };
 
         // Let's have a nice way to kill the modal.
         $scope.cancel = function() {
-          $modalInstance.close('cancel');
+            $modalInstance.close('cancel');
         };
     }
 );
