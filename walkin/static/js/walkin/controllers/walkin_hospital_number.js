@@ -3,7 +3,7 @@
 //
 controllers.controller(
     'WalkinHospitalNumberCtrl',
-    function($scope, $modalInstance, $modal, $rootScope,
+    function($scope, $modalInstance, $modal, $rootScope, $q,
              schema, options,
              Episode){
 
@@ -20,16 +20,9 @@ controllers.controller(
             if(!episode.newItem){
                 episode = new Episode(episode, schema);
             };
-            if(!episode.tagging[0].makeCopy){
-                episode.tagging[0] = episode.newItem('tagging',{
-                    column: {name: 'tagging', fields: [] }
-                })
-            }
-            var teams = episode.tagging[0].makeCopy();
+            var ep = episode.makeCopy();
             var location = episode.location[0].makeCopy();
-            teams.walkin = true;
-            teams.walkin_triage = true;
-            location.category = 'Walkin';
+            ep.category = 'Walkin';
 
             //
             // Pre fill some tests:
@@ -40,16 +33,16 @@ controllers.controller(
             var malaria_film = episode.newItem('microbiology_test',
                                        {column: $rootScope.fields.microbiology_test});
 
-            episode.tagging[0].save(teams).then(function(){
-                episode.location[0].save(location).then(function(){
-                    stool_ocp.save({test: 'Stool OCP'}).then(function(){
-                        malaria_film.save({test: 'Malaria Film'}).then(function(){
-                            episode.active = true;
-                            $modalInstance.close(episode);
-                        });
-                    });
-                })
-            });
+            $q.all([
+                episode.save(ep),
+                episode.location[0].save(location),
+                stool_ocp.save({test: 'Stool OCP'}),
+                malaria_film.save({test: 'Malaria Film'})
+            ]).then(function(){
+                episode.active = true;
+                $modalInstance.close(episode);
+            })
+
         };
 
         //
