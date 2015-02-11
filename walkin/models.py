@@ -10,11 +10,8 @@ from opal.utils.models import lookup_list
 
 class Symptom(EpisodeSubrecord):
     _title = 'Symptoms'
-    _fieldnames = [
-        'episode_id',
-        'symptom', 'duration',
-        'details'
-        ]
+    _icon = 'fa fa-stethoscope'
+    
     symptom = ForeignKeyOrFreeText(option_models['symptom'])
     duration = models.CharField(max_length=255, blank=True)
     details = models.CharField(max_length=255, blank=True)
@@ -26,6 +23,7 @@ RashDistributionLookupList = type(*lookup_list('findings_rash_distribution', mod
 class ClinicalFindings(EpisodeSubrecord):
     _is_singleton = True
     _title = 'Clinical Findings'
+    _icon = 'fa fa-stethoscope'
 
     lymphadenopathy = models.CharField(max_length=20, blank=True, null=True)
     lymphadenopathy_details = models.CharField(max_length=255, blank=True, null=True)
@@ -48,6 +46,8 @@ FollowUpLookupList = type(*lookup_list('management_follow_up', module=__name__))
 ClinicLookupList = type(*lookup_list('management_clinics', module=__name__))
 
 class Management(EpisodeSubrecord):
+    _icon = 'fa fa-list-ol'
+
     follow_up = ForeignKeyOrFreeText(FollowUpLookupList)
     follow_up_clinic = ForeignKeyOrFreeText(ClinicLookupList)
     date_of_appointment = models.DateField(null=True, blank=True)

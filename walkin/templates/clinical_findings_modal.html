@@ -1,4 +1,5 @@
 {% extends 'modal_base.html' %}
+{% block icon %}<i class="fa fa-stethoscope"></i>{% endblock %}
 {% block modal_body %}
 <form class="form-horizontal">
     <div class="form-group">
@@ -162,7 +163,7 @@
 {% endblock %}
 
 {% block pop_buttons %}
-<button class="btn pull-left"
+<button class="btn btn-secondary pull-left"
               ng-click="prepopulate($event)"
               data-lymphadenopathy="N"
               data-jaundice="N"
