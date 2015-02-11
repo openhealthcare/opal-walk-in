@@ -12,3 +12,6 @@ class WalkinPlugin(OpalPlugin):
             'js/walkin/controllers/walkin_discharge.js'
         ]
     }
+    actions = [
+        'actions/walkin_next.html'
+    ]
