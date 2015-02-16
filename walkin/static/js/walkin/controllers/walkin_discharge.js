@@ -3,7 +3,7 @@
 //
 controllers.controller(
     'WalkinDischargeCtrl',
-    function($scope, $modalInstance, $rootScope,
+    function($scope, $modalInstance, $rootScope, $q,
              growl,
              Item,
              options, episode, tags){
@@ -53,6 +53,23 @@ controllers.controller(
                 growl.success('Moved to Review list')
                 $modalInstance.close('discharged');
             });
+        }
+
+        $scope.nurse_led_care = function(){
+            var nursing = $scope.episode.newItem('walkin_nurse_led_care');
+            to_save = [
+                nursing.save({
+                    reason:    $scope.meta.nurse_reason,
+                    treatment: $scope.meta.treatment
+                }),
+            ]
+            if($scope.meta.diagnosis){
+                var diagnosis = $scope.episode.newItem('diagnosis');
+                to_save.push(diagnosis.save({condition: $scope.meta.diagnosis}));
+            }
+            
+            $q.all(to_save);
+            $scope.remove_from_list()
         }
 
         $scope.remove_from_list = function(){

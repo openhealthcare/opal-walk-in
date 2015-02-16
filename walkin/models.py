@@ -53,3 +53,11 @@ class Management(EpisodeSubrecord):
     date_of_appointment = models.DateField(null=True, blank=True)
     advice = models.CharField(max_length=255, blank=True, null=True)
 
+NursingReasonLookupList = type(*lookup_list('wi_nurse_reason', module=__name__))
+
+class WalkinNurseLedCare(EpisodeSubrecord):
+    _icon = 'fa fa-user-md'
+    _title = 'Nurse led care'
+    
+    reason    = ForeignKeyOrFreeText(NursingReasonLookupList)
+    treatment = models.TextField(blank=True, null=True)

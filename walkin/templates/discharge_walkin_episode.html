@@ -1,14 +1,14 @@
+{% load forms %}
 <div class="modal-header">
   <button type="button" class="close" ng-click="cancel()">×</button>
   <h3>
     <i class="glyphicon glyphicon-ok"></i>
-
     Walk-in Next Stage
   </h3>
 </div>
 <div class="modal-body">
 
-  <!-- Initial State -->
+  <!-- Initial State Walkin triage -->
   <div ng-show="episode.tagging[0].walkin_triage == true && meta.accepted == null">
     <p>Accept onto walk-in service?</p>
     <center>
@@ -17,6 +17,7 @@
     </center>
   </div>
 
+  <!-- Triage -> Doctor led care -->
   <div ng-show="episode.tagging[0].walkin_triage == true && meta.accepted == true">
     <p>Are you sure?</p>
     <center>
@@ -24,13 +25,19 @@
     </center>
   </div>
 
+  <!-- Triage -> Nurse Led care  -->
   <div ng-show="episode.tagging[0].walkin_triage == true && meta.accepted == false">
-    <p>How did you treat this patient?</p>
+    <form class="form-horizontal">
+      {% select label="Reason" model="meta.nurse_reason" lookuplist="wi_nurse_reason_list" %}
+      {% input label="Diagnosis" model="meta.diagnosis" lookuplist="condition_list" show="meta.nurse_reason=='Treated by nurse'" %}
+      {% textarea label="Treatment" model="meta.treatment" show="meta.nurse_reason=='Treated by nurse'" %}
+    </form>
     <center>
-      <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">Modal to be completed</button>
+      <button class="btn btn-primary btn-lg"  ng-click="nurse_led_care()">Remove from list</button>
     </center>
   </div>
 
+  <!-- Initial state Doctor led care -->
   <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == null">
     <p>Walk-in appointment completed. Outstanding result?</p>
     <center>
