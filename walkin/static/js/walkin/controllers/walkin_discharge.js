@@ -8,17 +8,16 @@ controllers.controller(
              options, episode, tags){
 
         $scope.episode = episode;
-        $scope.episode.tagging[0] = $scope.episode.tagging[0].makeCopy();
         $scope.meta = {
             accepted: null
         };
 
         // Put all of our lookuplists in scope.
-      for (var name in options) {
-        if (name.indexOf('micro_test') != 0) {
-          $scope[name + '_list'] = options[name];
+        for (var name in options) {
+            if (name.indexOf('micro_test') != 0) {
+                $scope[name + '_list'] = options[name];
+            };
         };
-      };
 
 
         // Make sure that the episode's tagging item is an instance not an object
@@ -80,6 +79,6 @@ controllers.controller(
 
         // Let's have a nice way to kill the modal.
         $scope.cancel = function() {
-          $modalInstance.close('cancel');
+            $modalInstance.close('cancel');
         };
     });
