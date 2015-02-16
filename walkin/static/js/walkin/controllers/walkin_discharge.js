@@ -4,6 +4,7 @@
 controllers.controller(
     'WalkinDischargeCtrl',
     function($scope, $modalInstance, $rootScope,
+             growl,
              Item,
              options, episode, tags){
 
@@ -37,6 +38,7 @@ controllers.controller(
             tagging.walkin_doctor = true;
 
             $scope.episode.tagging[0].save(tagging).then(function(){
+                growl.success('Moved to Doctor list')
                 $modalInstance.close('discharged');
             });
         }
@@ -48,6 +50,7 @@ controllers.controller(
             tagging.walkin_review = true;
 
             $scope.episode.tagging[0].save(tagging).then(function(){
+                growl.success('Moved to Review list')
                 $modalInstance.close('discharged');
             });
         }
@@ -59,6 +62,7 @@ controllers.controller(
             tagging.walkin_doctor = false;
 
             $scope.episode.tagging[0].save(tagging).then(function(){
+                growl.success('Removed from Walk-in lists')
                 $modalInstance.close('discharged');
             });
         }
@@ -73,6 +77,7 @@ controllers.controller(
             tagging.mine = true;
 
             $scope.episode.tagging[0].save(tagging).then(function(){
+                growl.success('Admitted to ward')
                 $modalInstance.close('discharged');
             });
         }
