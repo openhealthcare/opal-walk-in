@@ -12,9 +12,10 @@ class Symptom(EpisodeSubrecord):
     _title = 'Symptoms'
     _icon = 'fa fa-stethoscope'
     
-    symptom = ForeignKeyOrFreeText(option_models['symptom'])
-    duration = models.CharField(max_length=255, blank=True)
-    details = models.CharField(max_length=255, blank=True)
+    symptom  = ForeignKeyOrFreeText(option_models['symptom'])
+    duration = models.CharField(max_length=255, blank=True, null=True)
+    details  = models.CharField(max_length=255, blank=True, null=True)
+    onset    = models.CharField(max_length=255, blank=True, null=True)
 
 
 RashTypeLookupList = type(*lookup_list('findings_rash_type', module=__name__))
