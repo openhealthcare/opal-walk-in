@@ -5,12 +5,13 @@ controllers.controller(
     'WalkinDischargeCtrl',
     function($scope, $modalInstance, $rootScope, $q,
              growl,
-             Item,
+             Item, CopyToCategory,
              options, episode, tags){
 
         $scope.episode = episode;
         $scope.meta = {
-            accepted: null
+            accepted: null,
+            target_team: null
         };
 
         // Put all of our lookuplists in scope.
@@ -84,19 +85,33 @@ controllers.controller(
             });
         }
 
+        // 
+        // Copy this episode to a new inpatient episode.
+        //
+        // Untag this episode.
+        // Tag the new episode to the selected team
+        // 
         $scope.admit_to_ward = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
             tagging.walkin = false;
             tagging.walkin_doctor = false;
-            // what sort of inpatient should they be?
-            // show modal with possible tags?
-            tagging.mine = true;
 
-            $scope.episode.tagging[0].save(tagging).then(function(){
-                growl.success('Admitted to ward')
-                $modalInstance.close('discharged');
-            });
+            CopyToCategory($scope.episode.id, 'inpatient').then(
+                function(episode){
+                    var newtagging = episode.tagging[0];
+                    var newtags = {};
+                    newtags[$scope.meta.target_team] = true;
+                    
+                    $q.all([
+                        $scope.episode.tagging[0].save(tagging),
+                        newtagging.save(newtags)
+                    ]).then(function(){
+                        var msg = 'Admitted to ' + $scope.meta.target_team + ' ward';
+                        growl.success(msg);
+                        $modalInstance.close('discharged');                        
+                    })
+                });
         }
 
         // Let's have a nice way to kill the modal.
