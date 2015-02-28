@@ -53,6 +53,10 @@ class Management(EpisodeSubrecord):
     follow_up_clinic    = ForeignKeyOrFreeText(ClinicLookupList)
     date_of_appointment = models.DateField(null=True, blank=True)
     advice              = models.CharField(max_length=255, blank=True, null=True)
+    results_actioned    = models.CharField(max_length=255, blank=True, null=True)
+
+    def __unicode__(self):
+        return u'Management: {0}'.format(self.id)
 
 
 class WalkinNurseLedCare(EpisodeSubrecord):
