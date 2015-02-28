@@ -4,8 +4,9 @@
   <h3>
     <i class="glyphicon glyphicon-ok"></i> &nbsp;
     <span ng-show="episode.hasTag('walkin_triage')" >Next</span>
-    <span ng-show="episode.hasTag('walkin_doctor')" >End of<br>appointment</span>
+    <span ng-show="episode.hasTag('walkin_doctor')" >End of appointment</span>
     <span ng-show="episode.hasTag('walkin_review')" >Results actioned</span>
+    ([[ episode.demographics[0].name ]])
   </h3>
 </div>
 <div class="modal-body">
