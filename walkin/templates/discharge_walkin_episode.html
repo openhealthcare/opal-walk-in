@@ -2,7 +2,10 @@
 <div class="modal-header">
   <button type="button" class="close" ng-click="cancel()">×</button>
   <h3>
-    <i class="glyphicon glyphicon-ok"></i> Walk-in Next Stage
+    <i class="glyphicon glyphicon-ok"></i> &nbsp;
+    <span ng-show="episode.hasTag('walkin_triage')" >Next</span>
+    <span ng-show="episode.hasTag('walkin_doctor')" >End of<br>appointment</span>
+    <span ng-show="episode.hasTag('walkin_review')" >Results actioned</span>
   </h3>
 </div>
 <div class="modal-body">
@@ -76,35 +79,48 @@
           {% for team in teams %}{% if not team.parent %}{% if team.direct_add %}
           {% if team.has_subteams %}
           {% for subteam in team.team_set.all %}
-            <option value="{{subteam.name}}">{{ team.title }} / {{ subteam.title }}</option>
+          <option value="{{subteam.name}}">{{ team.title }} / {{ subteam.title }}</option>
           {% endfor %}
           {% else %}
           <option value="{{team.name}}">{{team.title}}</option>
           {% endif %}
-        {% endif %}{% endif %}{% endfor %}
-      </select>
+          {% endif %}{% endif %}{% endfor %}
+        </select>
       </div>
     </div>
 
   </div>
 
-  <div ng-show="episode.tagging[0].walkin_review == true">
-    <p>To be completed</p>
+  <!-- Initial state for Results actioned -->
+  <div ng-show="episode.tagging[0].walkin_review == true && meta.results_actioned == null">
     <center>
-      <button class="btn btn-primary btn-lg" ng-click="remove_from_list()">
-        Has Consultant Outpatient Appointment
+      <button class="btn btn-primary"
+              ng-click="meta.results_actioned = 'outpatient-appointment'">
+        <i class="fa fa-calendar"></i> Has Consultant Outpatient Appointment
       </button>
-      <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">
-        All results back
+      <button class="btn btn-primary"  
+              ng-click="meta.results_actioned = 'results-back'">
+        <i class="fa fa-home"></i> All results back
       </button>
     </center>
   </div>
-</div>
-<div class="modal-footer">
-  <span ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'admit'">
-    <button class="btn btn-primary" ng-click="admit_to_ward()">
-      <i class="fa fa-bed"></i> Admit to ward
-    </button>
-  </span>
-  <button class="btn" ng-click="cancel()">Cancel</button>
-</div>
+
+  <!-- Confirmation state for Restults actioned -->
+  <div ng-show="episode.tagging[0].walkin_review == true && meta.results_actioned != null">
+    <center>
+      <button class="btn btn-primary"  ng-click="remove_from_list()">
+        <i class="fa fa-remove"></i> Remove from list
+      </button>
+    </center>
+    
+
+
+  </div>
+  <div class="modal-footer">
+    <span ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'admit'">
+      <button class="btn btn-primary" ng-click="admit_to_ward()">
+        <i class="fa fa-bed"></i> Admit to ward
+      </button>
+    </span>
+    <button class="btn" ng-click="cancel()">Cancel</button>
+  </div>

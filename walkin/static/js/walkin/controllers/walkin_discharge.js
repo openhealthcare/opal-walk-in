@@ -10,8 +10,9 @@ controllers.controller(
 
         $scope.episode = episode;
         $scope.meta = {
-            accepted: null,
-            target_team: null
+            accepted        : null,
+            target_team     : null,
+            results_actioned: null
         };
 
         // Put all of our lookuplists in scope.
@@ -20,7 +21,6 @@ controllers.controller(
                 $scope[name + '_list'] = options[name];
             };
         };
-
 
         // Make sure that the episode's tagging item is an instance not an object
         $scope.ensure_tagging = function(episode){
@@ -75,11 +75,24 @@ controllers.controller(
 
         $scope.remove_from_list = function(){
             $scope.ensure_tagging($scope.episode);
+
             var tagging = $scope.episode.tagging[0].makeCopy();
             tagging.walkin_triage = false;
             tagging.walkin_doctor = false;
+            tagging.walkin_review = false;
 
-            $scope.episode.tagging[0].save(tagging).then(function(){
+            if($scope.episode.management.length == 0 || !$scope.episode.management[0].makeCopy){
+                $scope.episode.management[0] = $scope.episode.newItem('management',{
+                    column: $rootScope.fields.management }
+                                                                  )
+            }
+            var management = $scope.episode.management[0].makeCopy();
+            management.results_actioned = $scope.meta.results_actioned;
+            
+            $q.all([
+                $scope.episode.management[0].save(management),
+                $scope.episode.tagging[0].save(tagging)
+            ]).then(function(){
                 growl.success('Removed from Walk-in lists')
                 $modalInstance.close('discharged');
             });
