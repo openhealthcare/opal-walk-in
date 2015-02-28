@@ -42,13 +42,18 @@
 
   <!-- Initial state Doctor led care -->
   <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == null">
-    <p>Walk-in appointment completed. Outstanding result?</p>
+    <p class="lead">
+      It's the end of the Walk-in appointment for <b>[[ episode.demographics[0].name ]]</b>.
+    </p>
+    <p class="lead">
+      What's the <b>next</b> stage?
+    </p>
     <center>
-      <button class="btn btn-primary" ng-click="meta.next = 'outstanding'">
-        <i class="fa fa-clock-o"></i> Outstanding result
-      </button>
       <button class="btn btn-primary"  ng-click="meta.next = 'no_outstanding'">
         <i class="fa fa-home"></i> No outstanding result
+      </button>
+      <button class="btn btn-primary" ng-click="meta.next = 'outstanding'">
+        <i class="fa fa-clock-o"></i> Wait for outstanding result
       </button>
       <button class="btn btn-primary"  ng-click="meta.next = 'admit'">
         <i class="fa fa-bed"></i> Admit to ward
@@ -57,21 +62,20 @@
   </div>
 
   <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'outstanding'">
-    <p>Are you sure?</p>
+    <p class="lead">Are you sure you want to move [[ episode.demographics[0].name ]] to <b>review</b>?</p>
     <center>
       <button class="btn btn-primary btn-lg"  ng-click="move_to_review()">Move to review</button>
     </center>
   </div>
   <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'no_outstanding'">
-    <p>Are you sure?</p>
+    <p class="lead">Remove [[ episode.demographics[0].name ]] with <b>no follow up</b>?</p>
     <center>
       <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">Remove from list</button>
     </center>
   </div>
   <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'admit'">
-    <p>Admit to which team?</p>
-
-    
+    <p class="lead">Which team should [[ episode.demographics[0].name ]] be <b>admitted</b> to?</p>
+    <form class="form form-horizontal">
     <div class="form-group">
       <label class="control-label col-sm-3">Team:</label>
       <div class="col-sm-8">
@@ -89,7 +93,7 @@
         </select>
       </div>
     </div>
-
+    </form>
   </div>
 
   <!-- Initial state for Results actioned -->
@@ -112,10 +116,7 @@
       <button class="btn btn-primary"  ng-click="remove_from_list()">
         <i class="fa fa-remove"></i> Remove from list
       </button>
-    </center>
-    
-
-
+    </center>    
   </div>
   <div class="modal-footer">
     <span ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'admit'">
