@@ -27,17 +27,13 @@ controllers.controller(
             //
             // Pre fill some tests:
             //
-            var stool_ocp = episode.newItem('microbiology_test',
-                                            {column: $rootScope.fields.microbiology_test});
-
-            var malaria_film = episode.newItem('microbiology_test',
-                                               {column: $rootScope.fields.microbiology_test});
+            var hiv = episode.newItem('microbiology_test',
+                                      {column: $rootScope.fields.microbiology_test});
 
             $q.all([
                 episode.save(ep),
                 episode.location[0].save(location),
-                stool_ocp.save({test: 'Stool OCP'}),
-                malaria_film.save({test: 'Malaria Film'})
+                hiv.save({test: 'Hiv Point of Care'}),
             ]).then(function(){
                 episode.active = true;
                 $modalInstance.close(episode);
