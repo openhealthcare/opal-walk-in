@@ -14,7 +14,7 @@ class Migration(DataMigration):
 
         from django.core.management import call_command
         call_command("loaddata", "options.json")
-        call_command("loaddata", "walkin.teams.json")
+        # call_command("loaddata", "walkin.teams.json")
 
 
     def backwards(self, orm):

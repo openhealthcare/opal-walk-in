@@ -1,1 +1,54 @@
-[{"pk": 25, "model": "opal.team", "fields": {"name": "walkin", "parent": null, "useful_numbers": [], "title": "Walk-in", "active": true, "order": null, "direct_add": false}}, {"pk": 26, "model": "opal.team", "fields": {"name": "walkin_triage", "parent": 25, "useful_numbers": [], "title": "Nurse Triage", "active": true, "order": null, "direct_add": false}}, {"pk": 27, "model": "opal.team", "fields": {"name": "walkin_doctor", "parent": 25, "useful_numbers": [], "title": "Doctor", "active": true, "order": null, "direct_add": false}}, {"pk": 28, "model": "opal.team", "fields": {"name": "walkin_review", "parent": 25, "useful_numbers": [], "title": "Review", "active": true, "order": null, "direct_add": false}}]
+[
+    {
+        "fields": {
+            "active": true, 
+            "direct_add": false, 
+            "name": "walkin", 
+            "order": null, 
+            "parent": null, 
+            "title": "Walk-in", 
+            "useful_numbers": []
+        }, 
+        "model": "opal.team", 
+        "pk": 25
+    }, 
+    {
+        "fields": {
+            "active": true, 
+            "direct_add": false, 
+            "name": "walkin_triage", 
+            "order": null, 
+            "parent": 25, 
+            "title": "Nurse Triage", 
+            "useful_numbers": []
+        }, 
+        "model": "opal.team", 
+        "pk": 26
+    }, 
+    {
+        "fields": {
+            "active": true, 
+            "direct_add": false, 
+            "name": "walkin_doctor", 
+            "order": null, 
+            "parent": 25, 
+            "title": "Doctor", 
+            "useful_numbers": []
+        }, 
+        "model": "opal.team", 
+        "pk": 27
+    }, 
+    {
+        "fields": {
+            "active": true, 
+            "direct_add": false, 
+            "name": "walkin_review", 
+            "order": null, 
+            "parent": 25, 
+            "title": "Review", 
+            "useful_numbers": []
+        }, 
+        "model": "opal.team", 
+        "pk": 28
+    }
+]
