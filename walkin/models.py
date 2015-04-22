@@ -4,8 +4,8 @@ Models for the OPAL observations plugin
 from django.db import models
 
 from opal.models import EpisodeSubrecord, option_models
-from opal.utils.fields import ForeignKeyOrFreeText
-from opal.utils.models import lookup_list
+from opal.core.fields import ForeignKeyOrFreeText
+from opal.core.lookuplists import lookup_list
 
 FollowUpLookupList         = type(*lookup_list('management_follow_up', module=__name__))
 ClinicLookupList           = type(*lookup_list('management_clinics', module=__name__))
