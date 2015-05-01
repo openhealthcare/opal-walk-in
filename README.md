@@ -11,3 +11,7 @@ Run
     $python manage.py migrate
 
 Add walk-in to your schemas as required.
+
+## Running the tests
+
+   $ rake devtest
