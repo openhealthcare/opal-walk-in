@@ -1,1 +1,3 @@
-model_names = []
+model_names = [
+    'symptom'
+]
