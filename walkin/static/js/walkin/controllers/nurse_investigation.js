@@ -4,7 +4,7 @@
 //
 controllers.controller(
     'WalkinNurseInvestigationsCtrl',
-    function($scope, $modalInstance, $q, episode){
+    function( $scope, $modalInstance, $q, episode ){
         
         $scope.investigations = {};
         $scope.episode        = episode;
@@ -21,17 +21,25 @@ controllers.controller(
             biochemistry     : 'Biochemistry',
             serum_save       : 'Serum Save'
         }
+        $scope.test_properties = _.invert( $scope.test_names );
+            
+        _.each( episode.microbiology_test, function(test){
+            if( test.test in $scope.test_properties ){
+                $scope.investigations[$scope.test_properties[test.test]] = true;
+            }
+        });
+        $scope.initial = angular.copy( $scope.investigations );
         
         $scope.save = function(){
             var saves = [];
-            _.each(_.keys($scope.investigations), function(key){
-                if($scope.investigations[key] == true){
-                    test = $scope.episode.newItem('microbiology_test');
-                    saves.push(test.save({test: $scope.test_names[key]}));
+            _.each( _.keys( $scope.investigations ), function( key ){
+                if( $scope.investigations[key] == true && !$scope.initial[key] ){
+                    test = $scope.episode.newItem( 'microbiology_test' );
+                    saves.push( test.save( {test: $scope.test_names[key]} ) );
                 }
             });
-            if(saves.length > 0){
-                $q.all(saves).then(
+            if( saves.length > 0 ){
+                $q.all( saves ).then(
                     function(){
                         $modalInstance.close();
                     }

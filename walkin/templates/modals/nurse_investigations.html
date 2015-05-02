@@ -7,42 +7,42 @@
   <table class="table table-striped table-bordered col-sm-12">
     <tr>
       <td>
-        {% checkbox labelwidth="4" label="Blood Culture" model="investigations.blood_culture" %}
+        {% checkbox labelwidth="4" label="Blood Culture" model="investigations.blood_culture" disabled="initial.blood_culture" %}
       </td>
       <td>
-        {% checkbox labelwidth="4" label="Urine MC&S" model="investigations.urine_mcs" %}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {% checkbox labelwidth="4" label="Wound swab MC&S" model="investigations.wound_swab_mcs" %}
-      </td>
-      <td>
-        {% checkbox labelwidth="4" label="Throat swab MC&S" model="investigations.throat_swab_mcs" %}
+        {% checkbox labelwidth="4" label="Urine MC&S" model="investigations.urine_mcs" disabled="initial.urine_mcs" %}
       </td>
     </tr>
     <tr>
       <td>
-        {% checkbox labelwidth="4" label="Stool MC&S" model="investigations.stool_mcs" %}
+        {% checkbox labelwidth="4" label="Wound swab MC&S" model="investigations.wound_swab_mcs" disabled="initial.wound_swab_mcs" %}
       </td>
       <td>
-        {% checkbox labelwidth="4" label="Stool OCP" model="investigations.stool_ocp" %}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {% checkbox labelwidth="4" label="Malaria Film" model="investigations.malaria_film" %}
-      </td>
-      <td>
-        {% checkbox labelwidth="4" label="Full Blood Count" model="investigations.full_blood_count" %}
+        {% checkbox labelwidth="4" label="Throat swab MC&S" model="investigations.throat_swab_mcs" disabled="initial.throat_swab_mcs" %}
       </td>
     </tr>
     <tr>
       <td>
-        {% checkbox labelwidth="4" label="Biochemistry" model="investigations.biochemistry" %}
+        {% checkbox labelwidth="4" label="Stool MC&S" model="investigations.stool_mcs" disabled="initial.stool_mcs" %}
       </td>
       <td>
-        {% checkbox labelwidth="4" label="Serum Save" model="investigations.serum_save" %}
+        {% checkbox labelwidth="4" label="Stool OCP" model="investigations.stool_ocp" disabled="initial.stool_ocp" %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {% checkbox labelwidth="4" label="Malaria Film" model="investigations.malaria_film" disabled="initial.malaria_film" %}
+      </td>
+      <td>
+        {% checkbox labelwidth="4" label="Full Blood Count" model="investigations.full_blood_count" disabled="initial.full_blood_count" %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {% checkbox labelwidth="4" label="Biochemistry" model="investigations.biochemistry" disabled="initial.biochemistry" %}
+      </td>
+      <td>
+        {% checkbox labelwidth="4" label="Serum Save" model="investigations.serum_save" disabled="initial.serum_save" %}
       </td>
     </tr>
   </table>
