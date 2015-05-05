@@ -48,6 +48,11 @@ controllers.controller(
                 $modalInstance.close();
             }
         };
+
+        // Let's have a nice way to kill the modal.
+        $scope.cancel = function() {
+            $modalInstance.close('cancel');
+        };
         
     }
 );

@@ -107,7 +107,16 @@ describe('WalkinNurseInvestigationsCtrl', function (){
             spyOn($modalInstance, 'close').andReturn(true);
             $scope.save();
             expect($modalInstance.close).toHaveBeenCalled();
-        });
-        
+        });        
     });
+
+    
+    describe('cancel()', function (){
+        it('Should close the modal', function () {
+            spyOn($modalInstance, 'close').andReturn(true);
+            $scope.cancel();
+            expect($modalInstance.close).toHaveBeenCalledWith('cancel');
+        });
+    });
+    
 });
