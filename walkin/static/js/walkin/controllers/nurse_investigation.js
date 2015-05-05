@@ -35,7 +35,9 @@ controllers.controller(
             _.each( _.keys( $scope.investigations ), function( key ){
                 if( $scope.investigations[key] == true && !$scope.initial[key] ){
                     test = $scope.episode.newItem( 'microbiology_test' );
-                    saves.push( test.save( {test: $scope.test_names[key]} ) );
+                    saves.push( test.save( {
+                        test: $scope.test_names[key],
+                        date_ordered: moment()} ) );
                 }
             });
             if( saves.length > 0 ){

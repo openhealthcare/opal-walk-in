@@ -1,9 +1,12 @@
 describe('WalkinNurseInvestigationsCtrl', function (){
     var $controller, $scope, $modalInstance, $httpBackend, $rootScope, episode;
+    var today;
 
     beforeEach(module('opal.controllers'));
     
     beforeEach(inject(function($injector){
+        today = moment();
+        
         $rootScope   = $injector.get('$rootScope');
         $scope       = $rootScope.$new();
         $controller  = $injector.get('$controller');
@@ -18,7 +21,8 @@ describe('WalkinNurseInvestigationsCtrl', function (){
                 name: 'microbiology_test',
                 single: false,
                 fields: [
-                    { name: 'test', type: 'string' }
+                    { name: 'test', type: 'string' },
+                    { name: 'date_ordered', type: 'date' }
                 ]
             }
         }
@@ -71,7 +75,7 @@ describe('WalkinNurseInvestigationsCtrl', function (){
             $scope.investigations.blood_culture = true;
             
             $httpBackend.expectPOST('/api/v0.1/microbiology_test/',
-                                    {test: 'Blood Culture'}).respond('yes');
+                                    {test: 'Blood Culture', date_ordered: today.format('YYYY-MM-DD')}).respond('yes');
             $scope.save();
             
             $httpBackend.flush();
@@ -85,7 +89,9 @@ describe('WalkinNurseInvestigationsCtrl', function (){
             $scope.investigations.blood_culture = true;
 
             $httpBackend.expectPOST('/api/v0.1/microbiology_test/',
-                                  {test: 'Blood Culture'}).respond('yes');
+                                  {
+                                      test: 'Blood Culture',
+                                      date_ordered: today.format('YYYY-MM-DD')}).respond('yes');
             $scope.save();
             $httpBackend.flush();
         });
@@ -94,9 +100,9 @@ describe('WalkinNurseInvestigationsCtrl', function (){
             $scope.investigations.blood_culture = true;
             $scope.investigations.malaria_film  = true
 
-            $httpBackend.expectPOST('/api/v0.1/microbiology_test/', {test: 'Blood Culture'})
+            $httpBackend.expectPOST('/api/v0.1/microbiology_test/', {test: 'Blood Culture', date_ordered: today.format('YYYY-MM-DD')})
                 .respond('yes');
-            $httpBackend.expectPOST('/api/v0.1/microbiology_test/', {test: 'Malaria Film'})
+            $httpBackend.expectPOST('/api/v0.1/microbiology_test/', {test: 'Malaria Film', date_ordered: today.format('YYYY-MM-DD')})
                 .respond('yes');
 
             $scope.save();
