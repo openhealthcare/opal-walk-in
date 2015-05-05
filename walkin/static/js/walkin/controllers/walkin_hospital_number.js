@@ -18,21 +18,19 @@ controllers.controller(
         //
         $scope.tag_and_close = function(episode){
             if(!episode.newItem){
-                episode = new Episode(episode, schema);
+                episode = new Episode(episode);
             };
             var ep = episode.makeCopy();
-            var location = episode.location[0].makeCopy();
             ep.category = 'Walkin';
-
+            ep.date_of_episode = moment();
+            
             //
             // Pre fill some tests:
             //
-            var hiv = episode.newItem('microbiology_test',
-                                      {column: $rootScope.fields.microbiology_test});
-
+            var hiv = episode.newItem('microbiology_test');
+                                      
             $q.all([
                 episode.save(ep),
-                episode.location[0].save(location),
                 hiv.save({test: 'HIV Point of Care'}),
             ]).then(function(){
                 episode.active = true;

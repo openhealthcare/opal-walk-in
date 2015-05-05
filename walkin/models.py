@@ -66,6 +66,3 @@ class WalkinNurseLedCare(EpisodeSubrecord):
     reason    = ForeignKeyOrFreeText(NursingReasonLookupList)
     treatment = models.TextField(blank=True, null=True)
 
-
-
-    
