@@ -33,7 +33,7 @@ controllers.controller(
             $q.all([
                 episode.save(ep),
                 episode.location[0].save(location),
-                hiv.save({test: 'Hiv Point of Care'}),
+                hiv.save({test: 'HIV Point of Care'}),
             ]).then(function(){
                 episode.active = true;
                 $modalInstance.close(episode);
