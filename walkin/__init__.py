@@ -16,5 +16,6 @@ class WalkinPlugin(OpalPlugin):
     }
     actions = [
         'actions/walkin_next.html',
-        'actions/nurse_investigations.html'
+        'actions/nurse_investigations.html',
+        'actions/discharge_summary.html'
     ]

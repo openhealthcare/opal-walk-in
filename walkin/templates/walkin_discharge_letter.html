@@ -1,0 +1,50 @@
+<p>
+  Re: [[ episode.demographics[0].name ]] <span ng-show="episode.demographisc[0].date_of_birth"> -
+    [[episode.demographisc[0].date_of_birth | shortDate]] ([[ episode.demographisc[0].date_of_birth | age ]])<br />
+  </span>
+</p>
+
+<p>
+  We saw your patient on [[ episode.date_of_episode | shortDate ]] at the Hospital for Tropical Diseases walk-in clinic.
+</p>
+
+
+<p ng-show="episode.travel.length > 0"><b>Travel:</b></p>
+<p ng-repeat="travel in episode.travel">
+  [[ travel.destination ]] - [[ travel.dates ]]
+</p>
+
+
+<p><b>Presenting complaint:</b></p>
+<p>
+  The patient reported a (SHORT/LONG) history of [[ episode.symptom[0].symptom ]]
+</p>
+</p>
+  On examination REPORT ANYTHING ABNORMAL FROM
+  EXAMINATION MODAL. (If NAD button used then replace sentence with - 
+  examination was unremarkable).
+</p>
+
+<p><b>Investigations:</b></p>
+<p ng-repeat="test in episode.microbiology_test">
+  [[ test.test ]] - [[ test.result ]]
+</p>
+
+<p><b>Management:</b></p>
+<p>
+  It was felt that the most likely diagnosis was [[ episode.diagnosis[0].condition ]]
+</p>
+<p ng-show="episode.management[0].advice">
+  The patient was advised [[ episode.management[0].advice ]]
+</p>
+<div ng-show="episode.antimicrobial.length > 0">
+  <p ng-repeat="drug in episode.antimicrobial">
+    [[ drug.drug ]] [[drug.dose]]
+  </p>
+</div>
+<p ng-show="episode.management[0].follow_up_clinic">
+  We have booked follow-up in [[ episode.management[0].follow_up_clinic ]]
+</p>
+<p ng-hide="episode.management[0].follow_up_clinic">
+  We have not booked follow-up clinic.
+</p>
