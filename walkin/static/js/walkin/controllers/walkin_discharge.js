@@ -4,8 +4,9 @@
 controllers.controller(
     'WalkinDischargeCtrl',
     function($scope, $modalInstance, $rootScope, $q,
+             $modal,
              growl,
-             Item, CopyToCategory,
+             Item, CopyToCategory, UserProfile,
              options, episode, tags){
 
         $scope.episode = episode;
@@ -125,6 +126,23 @@ controllers.controller(
                         $modalInstance.close('discharged');                        
                     })
                 });
+        }
+
+        $scope.move_to_management = function(){
+            var item = $scope.episode.newItem('management');
+            $scope.episode.addItem(item);
+            
+            $modal.open({
+                templateUrl: '/templates/modals/management.html',
+                controller: 'EditItemCtrl',
+                resolve: {
+                    item: function() { return item; },
+                    options: function() { return options; },
+                    profile: function() { return UserProfile; },
+                    episode: function() { return episode; }
+                }
+            });
+            $scope.cancel();
         }
 
         // Let's have a nice way to kill the modal.

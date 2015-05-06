@@ -40,8 +40,21 @@
     </center>
   </div>
 
-  <!-- Initial state Doctor led care -->
-  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == null">
+  <!-- Initial state Doctor led care without Management -->
+  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == null && !episode.management[0].follow_up">
+    <p class="lead">
+      In order to finish the Walk-in appointment for <b>[[ episode.demographics[0].name ]]</b> we
+      need to complete the <b>Management</b> field.
+    </p>
+    <center>
+      <button class="btn btn-primary btn-lg"  ng-click="move_to_management()">
+        <i class="fa fa-list-ol"></i> Complete Management field
+      </button>
+    </center>
+  </div>
+  
+  <!-- Initial state Doctor led care With Management -->
+  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == null && episode.management[0].follow_up">
     <p class="lead">
       It's the end of the Walk-in appointment for <b>[[ episode.demographics[0].name ]]</b>.
     </p>

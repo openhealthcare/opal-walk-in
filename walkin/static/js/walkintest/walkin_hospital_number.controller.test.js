@@ -5,7 +5,6 @@ describe('WalkinHospitalNumberCtrl', function (){
 
     beforeEach(module('opal.controllers'));
 
-
     beforeEach(inject(function($injector){
         today = moment();
         
