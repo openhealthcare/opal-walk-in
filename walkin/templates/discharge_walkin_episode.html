@@ -44,8 +44,10 @@
   <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == null && !episode.management[0].follow_up">
     <p class="lead">
       You haven't entered anything in the management field. In order to finish the Walk-in appointment for 
-      <b>[[ episode.demographics[0].name ]]</b> please
-      complete the <b>Management</b> field and then re-click "End of Appointment".
+      <b>[[ episode.demographics[0].name ]]</b>.
+    </p>
+    <p class="lead">
+      Please complete the <b>Management</b> field and then re-click "End of Appointment".
     </p>
     <center>
       <button class="btn btn-primary btn-lg"  ng-click="move_to_management()">
