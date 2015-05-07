@@ -17,13 +17,66 @@
 
 <p><b>Presenting complaint:</b></p>
 <p>
-  The patient reported a (SHORT/LONG) history of [[ episode.symptom[0].symptom ]]
+  The patient reported a 
+  <span ng-show="episode.symptom[0].duration == '3 days or less' || episode.symptom[0] == '4-10 days'">short</span>
+  <span ng-show="episode.symptom[0].duration == '11-21 days' || episode.symptom[0] == '22 days to 3 months'">sub-acute</span>
+  <span ng-show="episode.symptom[0].duration == 'over 3 months'">long</span>
+  history of [[ episode.symptom[0].symptom ]]
 </p>
 </p>
-  On examination REPORT ANYTHING ABNORMAL FROM
-  EXAMINATION MODAL. (If NAD button used then replace sentence with - 
-  examination was unremarkable).
+ <b>On examination:</b>
 </p>
+<div ng-repeat="exam in episode.clinical_findings">
+  <p ng-show="exam.lympadenopathy == 'yes'">
+    There was [[ exam.lympadenopathy_details ]] lymphadenopathy.
+  </p>
+  <p ng-hide="exam.lympadenopathy == 'yes'">
+    There was no lymphadenopathy.
+  </p>
+  <p ng-show="exam.jaundice == 'yes'">
+    The patient was clinically jaundiced.
+  </p>
+  <p ng-show="exam.dehydrated == 'yes'">
+    The patient was clinically dehydrated.
+  </p>
+  <p ng-show="exam.rash == 'yes'">
+    There was a [[ exam.rash_type ]] rash over the [[ exam.rash_distribution ]].
+  </p>
+  <p ng-show="exam.cardiovascular == 'NAD'">
+    Cardiovascular examination was normal.
+  </p>
+  <p ng-show="exam.cardiovascular != 'NAD' && exam.cardiovascular">
+    Examination of the cardiovascular system revealed [[ exam.cardiovascular ]].
+  </p>
+  <p ng-show="exam.respiratory == 'NAD'">
+    Respiratory examination was normal.
+  </p>
+  <p ng-show="exam.respiratory != 'NAD' && exam.respiratory">
+    Examination of the respiratory system revealed [[ exam.respiratory ]].
+  </p>
+  <p ng-show="exam.abdominal == 'NAD'">
+    Abdominal examination was normal.
+  </p>
+  <p ng-show="exam.abdominal != 'NAD' && exam.abdominal">
+    Examination of the abdominal system revealed [[ exam.abdominal ]].
+  </p>
+  <p ng-show="exam.neurological == 'NAD'">
+    Neurological examination was normal.
+  </p>
+  <p ng-show="exam.neurological != 'NAD' && exam.neurological">
+    Examination of the neurological system revealed [[ exam.neurological ]].
+  </p>
+  <p ng-show="exam.oropharnyx == 'NAD'">
+    Oropharnyx examination was normal.
+  </p>
+  <p ng-show="exam.oropharnyx != 'NAD' && exam.oropharnyx">
+    Examination of the oropharnyx system revealed [[ exam.oropharnyx ]].
+  </p>
+  <p ng-show="exam.other_findings != 'NAD' && exam.other_findings">
+    [[ exam.other_findings ]] were also noted.
+  </p>
+
+</div>
 
 <p><b>Investigations:</b></p>
 <p ng-repeat="test in episode.microbiology_test">
