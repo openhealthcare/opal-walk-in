@@ -2,6 +2,10 @@
 
 Walk-in plugin for OPAL
 
+## Dependencies
+
+Requires the opal-dischargesummaries and the opal-observations plugins
+
 ## Installation
 
 Add to your implementation's INSTALLED_APPLICATIONS.
