@@ -26,6 +26,13 @@
 </p>
  <b>On examination:</b>
 </p>
+<p>
+  Temperature [[episode.observation[0].temperature]]
+  Blood Pressure [[episode.observation[0].bp_systolic]]/[[episode.observation[0].bp_diastolic]]
+  Pulse [[episode.observation[0].pulse]]
+  Respiratory Rate [[episode.observation[0].resp_rate]]
+  Sp02 [[episode.observation[0].sp02]]
+</p>
 <div ng-repeat="exam in episode.clinical_findings">
   <p ng-show="exam.lympadenopathy == 'yes'">
     There was [[ exam.lympadenopathy_details ]] lymphadenopathy.
@@ -96,9 +103,12 @@
     [[ drug.drug ]] [[drug.dose]]
   </p>
 </div>
-<p ng-show="episode.management[0].follow_up_clinic">
+<p ng-show="episode.management[0].follow_up == 'Admitted to Ward'">
+  The patient was admitted to the ward
+</p>
+<p ng-show="episode.management[0].follow_up.indexOf('Follow-Up in clinic') != -1 ">
   We have booked follow-up in [[ episode.management[0].follow_up_clinic ]]
 </p>
-<p ng-hide="episode.management[0].follow_up_clinic">
-  We have not booked follow-up clinic.
+<p ng-show="episode.management[0].follow_up.indexOf('No Follow-up') != -1 ">
+  We have not booked a follow-up clinic.
 </p>
