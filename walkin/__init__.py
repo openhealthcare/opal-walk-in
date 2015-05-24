@@ -1,11 +1,11 @@
 """
 Plugin definition
 """
-from opal.core.plugins import OpalPlugin
+from opal.core import plugins
 
 from walkin.urls import urlpatterns
 
-class WalkinPlugin(OpalPlugin):
+class WalkinPlugin(plugins.OpalPlugin):
     urls = urlpatterns
     javascripts = {
         'opal.controllers': [
@@ -19,3 +19,5 @@ class WalkinPlugin(OpalPlugin):
         'actions/nurse_investigations.html',
         'actions/discharge_summary.html'
     ]
+
+plugins.register(WalkinPlugin)
