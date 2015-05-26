@@ -95,7 +95,10 @@
   The most likely diagnosis was [[ episode.diagnosis[0].condition ]]
 </p>
 <p ng-show="episode.management[0].advice">
-  The patient was advised to [[ episode.management[0].advice ]]
+  <b>Advice:</b>
+</p>
+<p ng-show="episode.management[0].advice">
+  [[ episode.management[0].advice ]]
 </p>
 <div ng-show="episode.antimicrobial.length > 0">
   <p>The patient was prescribed:</p>
