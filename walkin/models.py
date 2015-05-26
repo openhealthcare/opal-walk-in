@@ -3,28 +3,27 @@ Models for the OPAL observations plugin
 """
 from django.db import models
 
-from opal.models import EpisodeSubrecord, option_models
+from opal import models as omodels
+from opal.core import lookuplists
 from opal.core.fields import ForeignKeyOrFreeText
-from opal.core.lookuplists import lookup_list
 
-FollowUpLookupList         = type(*lookup_list('management_follow_up', module=__name__))
-ClinicLookupList           = type(*lookup_list('management_clinics', module=__name__))
-NursingReasonLookupList    = type(*lookup_list('wi_nurse_reason', module=__name__))
-RashTypeLookupList         = type(*lookup_list('findings_rash_type', module=__name__))
-RashDistributionLookupList = type(*lookup_list('findings_rash_distribution', module=__name__))
+class Management_follow_up(lookuplists.LookupList): pass
+class Management_clinics(lookuplists.LookupList): pass
+class Wi_nurse_reason(lookuplists.LookupList): pass
+class Findings_rash_type(lookuplists.LookupList): pass
+class Findings_rash_distribution(lookuplists.LookupList): pass
 
-
-class Symptom(EpisodeSubrecord):
+class Symptom(omodels.EpisodeSubrecord):
     _title = 'Symptoms'
     _icon = 'fa fa-stethoscope'
     
-    symptom  = ForeignKeyOrFreeText(option_models['symptom'])
+    symptom  = ForeignKeyOrFreeText(omodels.Symptom)
     duration = models.CharField(max_length=255, blank=True, null=True)
     details  = models.CharField(max_length=255, blank=True, null=True)
     onset    = models.CharField(max_length=255, blank=True, null=True)
 
 
-class ClinicalFindings(EpisodeSubrecord):
+class ClinicalFindings(omodels.EpisodeSubrecord):
     _is_singleton = True
     _title        = 'Clinical Findings'
     _icon         = 'fa fa-stethoscope'
@@ -35,8 +34,8 @@ class ClinicalFindings(EpisodeSubrecord):
     dehydrated              = models.CharField(max_length=20, blank=True)
 
     rash                    = models.CharField(max_length=20, blank=True)
-    rash_type               = ForeignKeyOrFreeText(RashTypeLookupList)
-    rash_distribution       = ForeignKeyOrFreeText(RashDistributionLookupList)
+    rash_type               = ForeignKeyOrFreeText(Findings_rash_type)
+    rash_distribution       = ForeignKeyOrFreeText(Findings_rash_distribution)
 
     cardiovascular          = models.CharField(max_length=255, blank=True, null=True)
     respiratory             = models.CharField(max_length=255, blank=True, null=True)
@@ -46,11 +45,11 @@ class ClinicalFindings(EpisodeSubrecord):
     other_findings          = models.CharField(max_length=255, blank=True, null=True)
 
 
-class Management(EpisodeSubrecord):
+class Management(omodels.EpisodeSubrecord):
     _icon = 'fa fa-list-ol'
 
-    follow_up           = ForeignKeyOrFreeText(FollowUpLookupList)
-    follow_up_clinic    = ForeignKeyOrFreeText(ClinicLookupList)
+    follow_up           = ForeignKeyOrFreeText(Management_follow_up)
+    follow_up_clinic    = ForeignKeyOrFreeText(Management_clinics)
     date_of_appointment = models.DateField(null=True, blank=True)
     advice              = models.CharField(max_length=255, blank=True, null=True)
     results_actioned    = models.CharField(max_length=255, blank=True, null=True)
@@ -59,10 +58,10 @@ class Management(EpisodeSubrecord):
         return u'Management: {0}'.format(self.id)
 
 
-class WalkinNurseLedCare(EpisodeSubrecord):
+class WalkinNurseLedCare(omodels.EpisodeSubrecord):
     _icon  = 'fa fa-user-md'
     _title = 'Nurse led care'
     
-    reason    = ForeignKeyOrFreeText(NursingReasonLookupList)
+    reason    = ForeignKeyOrFreeText(Wi_nurse_reason)
     treatment = models.TextField(blank=True, null=True)
 
