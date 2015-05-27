@@ -129,7 +129,9 @@ controllers.controller(
         }
 
         $scope.move_to_management = function(){
+            var deferred = $q.defer();
             var item = $scope.episode.newItem('management');
+            
             $scope.episode.addItem(item);
             
             $modal.open({
@@ -141,8 +143,11 @@ controllers.controller(
                     profile: function() { return UserProfile; },
                     episode: function() { return episode; }
                 }
-            });
-            $scope.cancel();
+            }).result.then(
+                function(r){ deferred.resolve(r) },
+                function(r){ deferred.reject(r) }
+            );
+            $modalInstance.close(deferred.promise);
         }
 
         // Let's have a nice way to kill the modal.
