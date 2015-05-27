@@ -3,7 +3,7 @@
 //
 controllers.controller(
     'WalkinDischargeCtrl',
-    function($scope, $modalInstance, $rootScope, $q,
+    function($scope, $modalInstance, $modal, $rootScope, $q,
              $modal,
              growl,
              Item, CopyToCategory, UserProfile,
@@ -70,11 +70,6 @@ controllers.controller(
                 to_save.push(diagnosis.save({condition: $scope.meta.diagnosis}));
             }
             
-            $q.all(to_save);
-            $scope.remove_from_list()
-        }
-
-        $scope.remove_from_list = function(){
             $scope.ensure_tagging($scope.episode);
 
             var tagging = $scope.episode.tagging[0].makeCopy();
@@ -89,13 +84,25 @@ controllers.controller(
             }
             var management = $scope.episode.management[0].makeCopy();
             management.results_actioned = $scope.meta.results_actioned;
+            to_save.push($scope.episode.management[0].save(management));
+            to_save.push($scope.episode.tagging[0].save(tagging));
             
-            $q.all([
-                $scope.episode.management[0].save(management),
-                $scope.episode.tagging[0].save(tagging)
-            ]).then(function(){
+            $q.all(to_save).then(function(){
                 growl.success('Removed from Walk-in lists')
-                $modalInstance.close('discharged');
+                var deferred = $q.defer();
+                'discharged'
+
+                $rootScope.open_modal(
+                    'ModalDischargeSummaryCtrl',
+                    '/dischargesummary/modals/walkinnurse/',
+                    'lg',
+                    {episode: episode}
+                ).result.then(
+                    function(r){ deferred.resolve('discharged') },
+                    function(r){ deferred.reject('discharged') }                    
+                );
+                
+                $modalInstance.close(deferred.promise);
             });
         }
 
