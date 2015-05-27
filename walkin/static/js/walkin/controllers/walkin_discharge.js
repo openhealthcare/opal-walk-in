@@ -91,18 +91,21 @@ controllers.controller(
                 growl.success('Removed from Walk-in lists')
                 var deferred = $q.defer();
                 'discharged'
-
-                $rootScope.open_modal(
-                    'ModalDischargeSummaryCtrl',
-                    '/dischargesummary/modals/walkinnurse/',
-                    'lg',
-                    {episode: episode}
-                ).result.then(
-                    function(r){ deferred.resolve('discharged') },
-                    function(r){ deferred.reject('discharged') }                    
-                );
-                
-                $modalInstance.close(deferred.promise);
+                if($scope.meta.nurse_reason == 'Treated by nurse'){
+                    $rootScope.open_modal(
+                        'ModalDischargeSummaryCtrl',
+                        '/dischargesummary/modals/walkinnurse/',
+                        'lg',
+                        {episode: episode}
+                    ).result.then(
+                        function(r){ deferred.resolve('discharged') },
+                        function(r){ deferred.reject('discharged') }                    
+                    );
+                    
+                    $modalInstance.close(deferred.promise);
+                }else{
+                    $modalInstance.close('discharged');
+                }
             });
         }
 
