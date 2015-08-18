@@ -20,7 +20,7 @@ class Management_clinics(lookuplists.LookupList):
 
 class Wi_nurse_reason(lookuplists.LookupList):
     class Meta:
-        verbose_name = "WI nurse reason"
+        verbose_name = "Walkin nurse reason"
 
 
 class Findings_rash_type(lookuplists.LookupList):
