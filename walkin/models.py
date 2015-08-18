@@ -7,16 +7,36 @@ from opal import models as omodels
 from opal.core import lookuplists
 from opal.core.fields import ForeignKeyOrFreeText
 
-class Management_follow_up(lookuplists.LookupList): pass
-class Management_clinics(lookuplists.LookupList): pass
-class Wi_nurse_reason(lookuplists.LookupList): pass
-class Findings_rash_type(lookuplists.LookupList): pass
-class Findings_rash_distribution(lookuplists.LookupList): pass
+class Management_follow_up(lookuplists.LookupList):
+    class Meta:
+        verbose_name = "Management follow up"
+
+
+class Management_clinics(lookuplists.LookupList):
+    class Meta:
+        verbose_name = "Management clinics"
+        verbose_name_plural = "Management clinics"
+
+
+class Wi_nurse_reason(lookuplists.LookupList):
+    class Meta:
+        verbose_name = "WI nurse reason"
+
+
+class Findings_rash_type(lookuplists.LookupList):
+    class Meta:
+        verbose_name = "Findings rash type"
+
+
+class Findings_rash_distribution(lookuplists.LookupList):
+    class Meta:
+        verbose_name = "Findings rash distribution"
+
 
 class Symptom(omodels.EpisodeSubrecord):
     _title = 'Symptoms'
     _icon = 'fa fa-stethoscope'
-    
+
     symptom  = ForeignKeyOrFreeText(omodels.Symptom)
     duration = models.CharField(max_length=255, blank=True, null=True)
     details  = models.CharField(max_length=255, blank=True, null=True)
@@ -61,7 +81,6 @@ class Management(omodels.EpisodeSubrecord):
 class WalkinNurseLedCare(omodels.EpisodeSubrecord):
     _icon  = 'fa fa-user-md'
     _title = 'Nurse led care'
-    
+
     reason    = ForeignKeyOrFreeText(Wi_nurse_reason)
     treatment = models.TextField(blank=True, null=True)
-
