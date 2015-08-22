@@ -110,7 +110,7 @@ describe('WalkinNurseInvestigationsCtrl', function (){
         });
 
         it('Should close the modal', function () {
-            spyOn($modalInstance, 'close').andReturn(true);
+            spyOn($modalInstance, 'close').and.returnValue(true);
             $scope.save();
             expect($modalInstance.close).toHaveBeenCalled();
         });        
@@ -119,7 +119,7 @@ describe('WalkinNurseInvestigationsCtrl', function (){
     
     describe('cancel()', function (){
         it('Should close the modal', function () {
-            spyOn($modalInstance, 'close').andReturn(true);
+            spyOn($modalInstance, 'close').and.returnValue(true);
             $scope.cancel();
             expect($modalInstance.close).toHaveBeenCalledWith('cancel');
         });

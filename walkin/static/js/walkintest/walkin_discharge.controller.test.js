@@ -52,16 +52,16 @@ describe('WalkinDischargeCtrl', function(){
             $httpBackend.expectGET('/api/v0.1/userprofile/').respond({});
 
             open_deferred = $q.defer();
-            spyOn($modal, 'open').andCallFake(function(){
+            spyOn($modal, 'open').and.callFake(function(){
                 return {result: open_deferred.promise } 
             });
             spyOn($modalInstance, 'close');
-            spyOn($scope, 'cancel').andCallThrough();
+            spyOn($scope, 'cancel').and.callThrough();
         });
         
         it('Should open Edit item with a management item', function () {
             $scope.move_to_management();
-            modal_opts = $modal.open.mostRecentCall.args[0];
+            modal_opts = $modal.open.calls.mostRecent().args[0];
             expect(modal_opts.templateUrl).toBe('/templates/modals/management.html');
             expect(modal_opts.controller).toBe('EditItemCtrl');
             expect(modal_opts.resolve.item().columnName).toBe('management');
@@ -76,13 +76,13 @@ describe('WalkinDischargeCtrl', function(){
 
         it('Should close the modal with a deferred', function () {
             $scope.move_to_management();
-            expect($modalInstance.close.mostRecentCall.args[0].then).toBeDefined();
+            expect($modalInstance.close.calls.mostRecent().args[0].then).toBeDefined();
             $httpBackend.flush()
         });
 
         it('Should resolve the deferred when edititem closes', function () {
             $scope.move_to_management();
-            var returned_deferred = $modalInstance.close.mostRecentCall.args[0];
+            var returned_deferred = $modalInstance.close.calls.mostRecent().args[0];
             dummy = jasmine.createSpy('function()');
             
             returned_deferred.then(dummy);
