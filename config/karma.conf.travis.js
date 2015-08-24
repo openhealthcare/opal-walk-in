@@ -2,7 +2,7 @@ module.exports = function(config){
     config.set({
         frameworks: ['jasmine'],
         browsers: ['Firefox'],
-        basePath:  '/usr/lib/ohc/opal/opal/static/js',
+        basePath:  '/home/travis/virtualenv/python2.7/src/opal/opal/static/js',
 
         files: [
             //JASMINE,
@@ -44,7 +44,17 @@ module.exports = function(config){
             __dirname+'/../walkin/static/js/walkin/controllers/*.js',
             __dirname+'/../walkin/static/js/walkintest/*.js',
             
+            
         ],
+
+        // Stolen from http://oligofren.wordpress.com/2014/05/27/running-karma-tests-on-browserstack/
+        browserDisconnectTimeout : 10000, // default 2000
+        browserDisconnectTolerance : 1, // default 0
+        browserNoActivityTimeout : 4*60*1000, //default 10000
+        captureTimeout : 4*60*1000, //default 60000
+
 
     })
 }
+
+

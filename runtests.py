@@ -18,15 +18,30 @@ settings.configure(DEBUG=True,
                    },
                    OPAL_OPTIONS_MODULE = 'walkin.tests.dummy_options_module',
                    ROOT_URLCONF='walkin.urls',
-                   STATIC_URL='/assets/',
+                   COMPRESS_ROOT='/tmp/',
+                   STATIC_URL = '/assets/',
+                   MIDDLEWARE_CLASSES = (
+                       'django.middleware.common.CommonMiddleware',
+                       'django.contrib.sessions.middleware.SessionMiddleware',
+                       'opal.middleware.AngularCSRFRename',
+                       'django.middleware.csrf.CsrfViewMiddleware',
+                       'django.contrib.auth.middleware.AuthenticationMiddleware',
+                       'django.contrib.messages.middleware.MessageMiddleware',
+                       'opal.middleware.DjangoReversionWorkaround',
+                       'reversion.middleware.RevisionMiddleware',
+                       'axes.middleware.FailedLoginMiddleware',
+                   ),
                    INSTALLED_APPS=('django.contrib.auth',
                                    'django.contrib.contenttypes',
                                    'django.contrib.sessions',
                                    'django.contrib.staticfiles',
                                    'django.contrib.admin',
                                    'opal',
+                                   'compressor',
                                    'walkin',))
 
+import django
+django.setup()
 
 from django.test.runner import DiscoverRunner
 test_runner = DiscoverRunner(verbosity=1)

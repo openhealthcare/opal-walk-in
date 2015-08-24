@@ -7,7 +7,7 @@ from opal.core.test import OpalTestCase
 class ModalsTestCase(OpalTestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='password')
+        self.user2 = User.objects.create_user(username='testuser', password='password')
 
     def test_discharge_template(self):
         self.assertTrue(self.client.login(username='testuser', password='password'))

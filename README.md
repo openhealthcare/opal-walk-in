@@ -18,4 +18,6 @@ Add walk-in to your schemas as required.
 
 ## Running the tests
 
-   $ rake devtest
+Tests use the [OPAL test runner](http://opal.openhealthcare.org.uk/docs/guides/command_line_tool/#test-what) and require the requirements.txt to be available
+
+   $ opal test
