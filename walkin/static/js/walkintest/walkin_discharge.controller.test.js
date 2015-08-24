@@ -2,11 +2,12 @@ describe('WalkinDischargeCtrl', function(){
     var $controller, $scope, $modalInstance, $httpBackend, $rootScope, $modal, $q, growl;
     var Episode;
     var options, episode, tags;
+    var today = new Date();
+    var today_string = moment(today).format('YYYY-MM-DD');
 
     beforeEach(module('opal.controllers'));
 
     beforeEach(inject(function($injector){
-        today = moment();
         
         $rootScope   = $injector.get('$rootScope');
         $scope       = $rootScope.$new();
@@ -110,8 +111,6 @@ describe('WalkinDischargeCtrl', function(){
     });
 
     describe('move_to_review()', function (){
-        var today = new Date();
-        var today_string = moment(today).format('YYYY-MM-DD');
         
         beforeEach(function(){
             $httpBackend.expectGET('/api/v0.1/userprofile/').respond({});
@@ -159,8 +158,6 @@ describe('WalkinDischargeCtrl', function(){
     });
     
     describe('nurse_led_care()', function (){
-        var today = new Date();
-        var today_string = moment(today).format('YYYY-MM-DD');
         
         beforeEach(function(){
             $httpBackend.expectGET('/api/v0.1/userprofile/').respond({});
@@ -182,8 +179,6 @@ describe('WalkinDischargeCtrl', function(){
     });
     
     describe('remove_from_list()', function (){
-        var today = new Date();
-        var today_string = moment(today).format('YYYY-MM-DD');
 
         beforeEach(function(){
             $httpBackend.expectGET('/api/v0.1/userprofile/').respond({});
@@ -228,7 +223,27 @@ describe('WalkinDischargeCtrl', function(){
     });
 
     describe('admit_to_ward()', function (){
-        // TODO: Test this method !
+
+        beforeEach(function(){
+            $httpBackend.expectGET('/api/v0.1/userprofile/').respond({});
+            $httpBackend.expectPOST('/episode/555/actions/copyto/inpatient')
+                .respond({id: 556, management: [{}], tagging: [{}] });
+            $httpBackend.expectPUT('/api/v0.1/tagging/555/').respond({});
+            $httpBackend.expectPUT(
+                '/episode/555/',
+                {id: 555, discharge_date: today_string }).respond({});
+            $httpBackend.expectPUT('/api/v0.1/tagging/556/').respond({});
+            spyOn($modalInstance, 'close');
+
+        });
+
+        it('Should set a discharge date', function () {
+            /// This is actually asserted by the PUT expectation for /episode/555 above
+            $scope.admit_to_ward();
+            $httpBackend.flush()
+            $scope.$digest(); // Fire actual resolving
+        });
+
     });
     
     describe('move_to_management()', function (){

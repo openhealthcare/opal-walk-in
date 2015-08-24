@@ -181,9 +181,11 @@ controllers.controller(
                     var newtagging = episode.tagging[0];
                     var newtags = {};
                     newtags[$scope.meta.target_team] = true;
-                    
-                    $q.all([
+                    var ep = $scope.episode.makeCopy();
+                    ep.discharge_date = new Date();                    
+                    $q.all([                        
                         $scope.episode.tagging[0].save(tagging),
+                        $scope.episode.save(ep),
                         newtagging.save(newtags)
                     ]).then(function(){
                         var msg = 'Admitted to ' + $scope.meta.target_team + ' ward';
