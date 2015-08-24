@@ -45,21 +45,46 @@ controllers.controller(
             });
         }
 
+        // 
+        // The doctor has finished seeing this patient - but there remain
+        // some outstanding test results that they would like to review.
+        //
+        // * Tag the patient to the review list
+        // * Set the discharge date on the Episode
+        // * Close the modal and inform the user
+        // 
         $scope.move_to_review = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
             tagging.walkin_doctor = false;
             tagging.walkin_review = true;
 
-            $scope.episode.tagging[0].save(tagging).then(function(){
-                growl.success('Moved to Review list')
-                $modalInstance.close('discharged');
+            var ep = $scope.episode.makeCopy();
+            ep.discharge_date = new Date();
+
+            $scope.episode.save(ep).then(function(){                
+                $scope.episode.tagging[0].save(tagging).then(function(){
+                    growl.success('Moved to Review list')
+                    $modalInstance.close('discharged');
+                });
             });
         }
 
+        // 
+        // The nurse has cared for this patient and is sending them home.
+        //
+        // Save the nursing care metadata, the date of discharge, de-tag
+        // the patient, and then open a discharge summary window for the
+        // nurse to copy the episode summary.
+        // 
         $scope.nurse_led_care = function(){
             var nursing = $scope.episode.newItem('walkin_nurse_led_care');
+
+            var ep = $scope.episode.makeCopy();
+            ep.discharge_date = new Date();
+            
             to_save = [
+                $scope.episode.save(ep),
                 nursing.save({
                     reason:    $scope.meta.nurse_reason,
                     treatment: $scope.meta.treatment
@@ -109,6 +134,36 @@ controllers.controller(
             });
         }
 
+        // 
+        // The appointment has finished with no further follow up.
+        //
+        // Untag this episode
+        // Set the discharge date if one does not exist
+        // Close the modal and inform the user
+        // 
+        $scope.remove_from_list = function(){
+            $scope.ensure_tagging($scope.episode);
+            var tagging = $scope.episode.tagging[0].makeCopy();
+            tagging.walkin_triage = false;
+            tagging.walkin_doctor = false;
+            tagging.walkin_review = false;
+            
+            var to_save = [
+                $scope.episode.tagging[0].save(tagging)
+            ]
+
+            if(!episode.discharge_date){
+                var ep = $scope.episode.makeCopy();
+                ep.discharge_date = new Date();
+                to_save.push($scope.episode.save(ep));
+            }
+            
+            $q.all(to_save).then(function(){
+                growl.success('Removed from Walk-in lists');
+                $modalInstance.close('discharged');
+            });
+        }
+        
         // 
         // Copy this episode to a new inpatient episode.
         //
