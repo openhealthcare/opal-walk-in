@@ -1,3 +1,4 @@
 Django==1.8.3
--e git://github.com/openhealthcare/opal.git@walk-in-clinic#egg=opal
+-e git://github.com/openhealthcare/opal.git@v0.4.2#egg=opal
 mock
+
