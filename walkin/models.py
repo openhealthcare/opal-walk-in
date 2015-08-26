@@ -1,5 +1,5 @@
 """
-Models for the OPAL observations plugin
+Models for the OPAL Walkin clinic plugin
 """
 from django.db import models
 
@@ -66,6 +66,7 @@ class ClinicalFindings(omodels.EpisodeSubrecord):
 
 
 class Management(omodels.EpisodeSubrecord):
+    _is_singleton = True
     _icon = 'fa fa-list-ol'
 
     follow_up           = ForeignKeyOrFreeText(Management_follow_up)
