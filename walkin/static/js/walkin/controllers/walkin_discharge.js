@@ -13,15 +13,19 @@ controllers.controller(
         $scope.meta = {
             accepted        : null,
             target_team     : null,
-            results_actioned: null
+            results_actioned: null,
+            follow_up       : null,
+            management      : episode.management[0].makeCopy()
         };
+
+        if($scope.meta.management.follow_up){ $scope.meta.follow_up = true; }
 
         // Put all of our lookuplists in scope.
         for (var name in options) {
             if (name.indexOf('micro_test') != 0) {
                 $scope[name + '_list'] = options[name];
             };
-        };
+        };        
 
         // Make sure that the episode's tagging item is an instance not an object
         $scope.ensure_tagging = function(episode){
@@ -33,6 +37,18 @@ controllers.controller(
             return
         };
 
+        // 
+        // We have entered the follow up information - save this in
+        // Walk-in Management and then set the "follow up" variable.
+        //
+        $scope.save_follow_up = function(){
+            $scope.episode.management[0].save($scope.meta.management).then(
+                function(){
+                    $scope.meta.follow_up = 'saved';
+                }
+            );
+        }        
+        
         $scope.move_to_doctor = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
@@ -175,6 +191,7 @@ controllers.controller(
             var tagging = $scope.episode.tagging[0].makeCopy();
             tagging.walkin = false;
             tagging.walkin_doctor = false;
+            $scope.meta.management.follow_up = 'Admitted to ward';
 
             CopyToCategory($scope.episode.id, 'inpatient').then(
                 function(episode){
@@ -186,35 +203,14 @@ controllers.controller(
                     $q.all([                        
                         $scope.episode.tagging[0].save(tagging),
                         $scope.episode.save(ep),
-                        newtagging.save(newtags)
+                        newtagging.save(newtags),
+                        $scope.episode.management[0].save($scope.meta.management)
                     ]).then(function(){
                         var msg = 'Admitted to ' + $scope.meta.target_team + ' ward';
                         growl.success(msg);
                         $modalInstance.close('discharged');                        
                     })
                 });
-        }
-
-        $scope.move_to_management = function(){
-            var deferred = $q.defer();
-            var item = $scope.episode.newItem('management');
-            
-            $scope.episode.addItem(item);
-            
-            $modal.open({
-                templateUrl: '/templates/modals/management.html',
-                controller: 'EditItemCtrl',
-                resolve: {
-                    item: function() { return item; },
-                    options: function() { return options; },
-                    profile: function() { return UserProfile; },
-                    episode: function() { return episode; }
-                }
-            }).result.then(
-                function(r){ deferred.resolve(r) },
-                function(r){ deferred.reject(r) }
-            );
-            $modalInstance.close(deferred.promise);
         }
 
         // Let's have a nice way to kill the modal.

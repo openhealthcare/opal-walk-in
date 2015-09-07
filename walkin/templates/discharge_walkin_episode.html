@@ -40,24 +40,8 @@
     </center>
   </div>
 
-  <!-- Initial state Doctor led care without Management -->
-  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == null && !episode.management[0].follow_up">
-    <p class="lead">
-      You haven't entered anything in the management field. In order to finish the Walk-in appointment for 
-      <b>[[ episode.demographics[0].name ]]</b>.
-    </p>
-    <p class="lead">
-      Please complete the <b>Management</b> field and then re-click "End of Appointment".
-    </p>
-    <center>
-      <button class="btn btn-primary btn-lg"  ng-click="move_to_management()">
-        <i class="fa fa-list-ol"></i> Complete Management field
-      </button>
-    </center>
-  </div>
-  
-  <!-- Initial state Doctor led care With Management -->
-  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == null && episode.management[0].follow_up">
+  <!-- Initial state Doctor led care, what's next -->
+  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == null">
     <p class="lead">
       It's the end of the Walk-in appointment for <b>[[ episode.demographics[0].name ]]</b>.
     </p>
@@ -77,40 +61,68 @@
     </center>
   </div>
 
+  <!-- Finished Doctor led care -> Do next thing -->
+  <!-- Outstanding results -> move to review -->
   <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'outstanding'">
     <p class="lead">Are you sure you want to move [[ episode.demographics[0].name ]] to <b>review</b>?</p>
     <center>
       <button class="btn btn-primary btn-lg"  ng-click="move_to_review()">Move to review</button>
     </center>
   </div>
-  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'no_outstanding'">
+
+  <!-- No Outstanding results but no management -> add management -->
+  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'no_outstanding' && meta.follow_up == null">
+    <p class="lead">What is the <b>follow up</b> for [[ episode.demographics[0].name ]]?</p>
+
+    <form class="form-horizontal">
+      {% radio label="Follow-up" model="meta.management.follow_up" lookuplist="['Discharged from clinic: No Follow-Up', 'Discharged from clinic: Follow-Up in clinic']"%}
+
+      <div ng-show="meta.management.follow_up == 'Discharged from clinic: Follow-Up in clinic'">
+      {% input model="meta.management.follow_up_clinic" label="Follow-up clinic" lookuplist="management_clinics_list" %}
+      {% datepicker model="meta.management.date_of_appointment" label="Date of appointment" %}
+      </div>
+      {% input label="Advice" model="meta.management.advice" %}
+    </form>
+    <center>
+      <button class="btn btn-primary btn-lg"  ng-click="save_follow_up()">
+        {% icon "fa-save" %}
+        Save
+      </button>
+    </center>
+  </div>
+
+  <!-- No Outstanding results, has management -> remove from list  -->
+  <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'no_outstanding' && meta.follow_up != null">
     <p class="lead">Remove [[ episode.demographics[0].name ]] with <b>no follow up</b>?</p>
     <center>
       <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">Remove from list</button>
     </center>
   </div>
+
   <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'admit'">
     <p class="lead">Which team should [[ episode.demographics[0].name ]] be <b>admitted</b> to?</p>
     <form class="form form-horizontal">
-    <div class="form-group">
-      <label class="control-label col-sm-3">Team:</label>
-      <div class="col-sm-8">
-        <select class="form-control" ng-model="meta.target_team">
-          <option value="">---------</option>
-          {% for team in teams %}{% if not team.parent %}{% if team.direct_add %}
-          {% if team.has_subteams %}
-          {% for subteam in team.team_set.all %}
-          <option value="{{subteam.name}}">{{ team.title }} / {{ subteam.title }}</option>
-          {% endfor %}
-          {% else %}
-          <option value="{{team.name}}">{{team.title}}</option>
-          {% endif %}
-          {% endif %}{% endif %}{% endfor %}
-        </select>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Team:</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="meta.target_team">
+            <option value="">---------</option>
+            {% for team in teams %}{% if not team.parent %}{% if team.direct_add %}
+            {% if team.has_subteams %}
+            {% for subteam in team.team_set.all %}
+            <option value="{{subteam.name}}">{{ team.title }} / {{ subteam.title }}</option>
+            {% endfor %}
+            {% else %}
+            <option value="{{team.name}}">{{team.title}}</option>
+            {% endif %}
+            {% endif %}{% endif %}{% endfor %}
+          </select>
+        </div>
       </div>
-    </div>
     </form>
   </div>
+
+  <!-- TODO -> Start here -->
 
   <!-- Initial state for Results actioned -->
   <div ng-show="episode.tagging[0].walkin_review == true && meta.results_actioned == null">
@@ -134,6 +146,7 @@
       </button>
     </center>    
   </div>
+
   <div class="modal-footer">
     <span ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'admit'">
       <button class="btn btn-primary" ng-click="admit_to_ward()">
