@@ -115,3 +115,11 @@
 <p ng-show="episode.management[0].follow_up.indexOf('No Follow-up') != -1 ">
   We have not booked a follow-up clinic.
 </p>
+<div ng-show="episode.microbiology_input && episode.microbiology_input.length > 0">
+  <p>
+    <b>Advice Given in Clinic / Telephone Discussion:</b>
+  </p>
+  <p ng-repeat="ca in episode.microbiology_input">
+    [[ ca.clinical_discussion ]]
+  </p>
+</div>
