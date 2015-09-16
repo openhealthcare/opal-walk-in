@@ -1,3 +1,7 @@
+### 0.1.2 Release
+
+Fixes a bug whereby patients could not be readmitted. (openhealthcare/elcid#742)
+
 ### 0.1.1 Release
 
 Resolves some pluralisation bugs in admin display.
