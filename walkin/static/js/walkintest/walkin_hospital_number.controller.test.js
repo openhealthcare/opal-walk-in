@@ -1,7 +1,7 @@
 
 describe('WalkinHospitalNumberCtrl', function (){
     var $controller, $scope, $modalInstance, $httpBackend, $rootScope;
-    var schema, options, Episode;
+    var schema, options, tags, Episode;
 
     beforeEach(module('opal.controllers'));
 
@@ -41,7 +41,8 @@ describe('WalkinHospitalNumberCtrl', function (){
             $scope         : $scope,
             $modalInstance : $modalInstance,
             schema         : schema,
-            options        : options
+            options        : options,
+            tags           : tags
         });
     }));
 

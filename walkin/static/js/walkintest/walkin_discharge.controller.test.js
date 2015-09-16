@@ -20,7 +20,6 @@ describe('WalkinDischargeCtrl', function(){
         $modalInstance = $modal.open({template: 'Not a real template'});
         schema = {};
         tags = {};
-        episode = new Episode({id: 555, management: [{}], tagging: [{}] });
         
         $rootScope.fields = {
             'management': {
@@ -95,6 +94,8 @@ describe('WalkinDischargeCtrl', function(){
 
         growl = {success: jasmine.createSpy('growl.success')};
         
+        episode = new Episode({id: 555, management: [{}], tagging: [{}] });
+
         controller = $controller('WalkinDischargeCtrl', {
             $scope         : $scope,
             $modalInstance : $modalInstance,
@@ -229,10 +230,12 @@ describe('WalkinDischargeCtrl', function(){
             $httpBackend.expectPOST('/episode/555/actions/copyto/inpatient')
                 .respond({id: 556, management: [{}], tagging: [{}] });
             $httpBackend.expectPUT('/api/v0.1/tagging/555/').respond({});
+
             $httpBackend.expectPUT(
                 '/episode/555/',
                 {id: 555, discharge_date: today_string }).respond({});
             $httpBackend.expectPUT('/api/v0.1/tagging/556/').respond({});
+            $httpBackend.expectPOST('/api/v0.1/management/').respond({});
             spyOn($modalInstance, 'close');
 
         });
@@ -245,54 +248,5 @@ describe('WalkinDischargeCtrl', function(){
         });
 
     });
-    
-    // describe('move_to_management()', function (){
-    //     var open_deferred;
-    //     beforeEach(function(){
-    //         $httpBackend.expectGET('/api/v0.1/userprofile/').respond({});
-
-    //         open_deferred = $q.defer();
-    //         spyOn($modal, 'open').and.callFake(function(){
-    //             return {result: open_deferred.promise } 
-    //         });
-    //         spyOn($modalInstance, 'close');
-    //         spyOn($scope, 'cancel').and.callThrough();
-    //     });
-        
-    //     it('Should open Edit item with a management item', function () {
-    //         $scope.move_to_management();
-    //         modal_opts = $modal.open.calls.mostRecent().args[0];
-    //         expect(modal_opts.templateUrl).toBe('/templates/modals/management.html');
-    //         expect(modal_opts.controller).toBe('EditItemCtrl');
-    //         expect(modal_opts.resolve.item().columnName).toBe('management');
-    //         $httpBackend.flush();
-    //     });
-
-    //     it('Should close the modal', function () {
-    //         $scope.move_to_management();
-    //         expect($modalInstance.close).toHaveBeenCalled();
-    //         $httpBackend.flush();
-    //     });
-
-    //     it('Should close the modal with a deferred', function () {
-    //         $scope.move_to_management();
-    //         expect($modalInstance.close.calls.mostRecent().args[0].then).toBeDefined();
-    //         $httpBackend.flush()
-    //     });
-
-    //     it('Should resolve the deferred when edititem closes', function () {
-    //         $scope.move_to_management();
-    //         var returned_deferred = $modalInstance.close.calls.mostRecent().args[0];
-    //         dummy = jasmine.createSpy('function()');
-            
-    //         returned_deferred.then(dummy);
-    //         expect(dummy).not.toHaveBeenCalled();
-    //         open_deferred.resolve();
-    //         $scope.$digest(); // Fire actual resolving
-    //         expect(dummy).toHaveBeenCalled();
-    //         $httpBackend.flush();
-    //     });
-        
-    // });
     
 });
