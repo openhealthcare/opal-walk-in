@@ -117,12 +117,13 @@ controllers.controller(
                                 return
                             }
                             if(episode.hasTag('walkin_review')){
-                            alert('Patient is currently on the Walkin Review list');
                                 die = true;
                                 if(tags.subtag == 'walkin_review'){
+                                    alert('Patient is currently on the Walkin Review list');
                                     console.log('already here');
                                     $scope.cancel();                                    
                                 } else {
+                                    alert('Patient is currently on the Walkin Review list. Moving them here.');
                                     var tagging = episode.tagging[0].makeCopy();
                                     tagging.walkin_review = false;
                                     tagging[tags.subtag] = true;
