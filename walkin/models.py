@@ -44,7 +44,6 @@ class Symptom(omodels.EpisodeSubrecord):
 
 
 class ClinicalFindings(omodels.EpisodeSubrecord):
-    _is_singleton = True
     _title        = 'Clinical Findings'
     _icon         = 'fa fa-stethoscope'
 
