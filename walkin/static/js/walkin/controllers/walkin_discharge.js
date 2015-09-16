@@ -171,9 +171,9 @@ controllers.controller(
             if(!episode.discharge_date){
                 var ep = $scope.episode.makeCopy();
                 ep.discharge_date = new Date();
-                to_save.push($scope.episode.save(ep));
+                to_save.push($scope.episode.save(ep));            
             }
-            
+
             $q.all(to_save).then(function(){
                 growl.success('Removed from Walk-in lists');
                 $modalInstance.close('discharged');
@@ -199,7 +199,7 @@ controllers.controller(
                     var newtags = {};
                     newtags[$scope.meta.target_team] = true;
                     var ep = $scope.episode.makeCopy();
-                    ep.discharge_date = new Date();                    
+                    ep.discharge_date = new Date();
                     $q.all([                        
                         $scope.episode.tagging[0].save(tagging),
                         $scope.episode.save(ep),
