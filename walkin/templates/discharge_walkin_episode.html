@@ -32,8 +32,8 @@
   <div ng-show="episode.tagging[0].walkin_triage == true && meta.accepted == false">
     <form class="form-horizontal">
       {% select label="Reason" model="meta.nurse_reason" lookuplist="wi_nurse_reason_list" %}
-      {% input label="Diagnosis" model="meta.diagnosis" lookuplist="condition_list" show="meta.nurse_reason=='Treated by nurse'" %}
-      {% textarea label="Treatment" model="meta.treatment" show="meta.nurse_reason=='Treated by nurse'" %}
+      {% input label="Diagnosis" model="meta.diagnosis" lookuplist="condition_list" %}
+      {% textarea label="Treatment" model="meta.treatment" %}
     </form>
     <center>
       <button class="btn btn-primary btn-lg"  ng-click="nurse_led_care()">Remove from list</button>
