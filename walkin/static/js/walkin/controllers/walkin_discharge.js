@@ -100,7 +100,6 @@ controllers.controller(
             ep.discharge_date = new Date();
             
             to_save = [
-                $scope.episode.save(ep),
                 nursing.save({
                     reason:    $scope.meta.nurse_reason,
                     treatment: $scope.meta.treatment
@@ -127,21 +126,24 @@ controllers.controller(
             management.results_actioned = $scope.meta.results_actioned;
             to_save.push($scope.episode.management[0].save(management));
             to_save.push($scope.episode.tagging[0].save(tagging));
-            
-            $q.all(to_save).then(function(){
-                growl.success('Removed from Walk-in lists')
-                var deferred = $q.defer();
-                $rootScope.open_modal(
-                    'ModalDischargeSummaryCtrl',
-                    '/dischargesummary/modals/walkinnurse/',
-                    'lg',
-                    {episode: episode}
-                ).result.then(
-                    function(r){ deferred.resolve('discharged') },
-                    function(r){ deferred.reject('discharged') }
-                );
-                $modalInstance.close(deferred.promise);
-            });
+
+            $scope.episode.save(ep).then(function(resp){
+                console.log(resp)
+                $q.all(to_save).then(function(){
+                    growl.success('Removed from Walk-in lists')
+                    var deferred = $q.defer();
+                    $rootScope.open_modal(
+                        'ModalDischargeSummaryCtrl',
+                        '/dischargesummary/modals/walkinnurse/',
+                        'lg',
+                        {episode: episode}
+                    ).result.then(
+                        function(r){ deferred.resolve('discharged') },
+                        function(r){ deferred.reject('discharged') }
+                    );
+                    $modalInstance.close(deferred.promise);
+                });
+            })
         }
 
         // 
