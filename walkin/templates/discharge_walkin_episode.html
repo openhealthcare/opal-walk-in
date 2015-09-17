@@ -58,15 +58,6 @@
     </center>
   </div>
 
-  <!-- Finished Doctor led care -> Do next thing -->
-  <!-- <\!-- Outstanding results -> move to review -\-> -->
-  <!-- <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'outstanding'"> -->
-  <!--   <p class="lead">Are you sure you want to move [[ episode.demographics[0].name ]] to <b>review</b>?</p> -->
-  <!--   <center> -->
-  <!--     <button class="btn btn-primary btn-lg"  ng-click="move_to_review()">Move to review</button> -->
-  <!--   </center> -->
-  <!-- </div> -->
-
   <!-- Review but no management -> add management -->
   <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'review' && meta.follow_up == null">
     <p class="lead">What is the <b>follow up</b> for [[ episode.demographics[0].name ]]?</p>
