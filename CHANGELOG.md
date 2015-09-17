@@ -1,3 +1,7 @@
+### 0.2 Release
+
+Allows discharge summary letters to be re-generated from details pages.
+
 ### 0.1.2 Release
 
 Fixes a bug whereby patients could not be readmitted. (openhealthcare/elcid#742)
