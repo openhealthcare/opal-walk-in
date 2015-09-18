@@ -9,30 +9,10 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('walkin', '0001_initial'),
+        ('walkin', '0003_auto_20150918_1439'),
     ]
 
     operations = [
-        migrations.AlterModelOptions(
-            name='findings_rash_distribution',
-            options={'verbose_name': 'Findings rash distribution'},
-        ),
-        migrations.AlterModelOptions(
-            name='findings_rash_type',
-            options={'verbose_name': 'Findings rash type'},
-        ),
-        migrations.AlterModelOptions(
-            name='management_clinics',
-            options={'verbose_name': 'Management clinics', 'verbose_name_plural': 'Management clinics'},
-        ),
-        migrations.AlterModelOptions(
-            name='management_follow_up',
-            options={'verbose_name': 'Management follow up'},
-        ),
-        migrations.AlterModelOptions(
-            name='wi_nurse_reason',
-            options={'verbose_name': 'Walkin nurse reason'},
-        ),
         migrations.AddField(
             model_name='clinicalfindings',
             name='created',

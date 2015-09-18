@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(
             model_name='clinicalfindings',
-            name='update',
+            name='updated',
         ),
         migrations.RemoveField(
             model_name='clinicalfindings',
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(
             model_name='management',
-            name='update',
+            name='updated',
         ),
         migrations.RemoveField(
             model_name='management',
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(
             model_name='symptom',
-            name='update',
+            name='updated',
         ),
         migrations.RemoveField(
             model_name='symptom',
@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(
             model_name='walkinnurseledcare',
-            name='update',
+            name='updated',
         ),
         migrations.RemoveField(
             model_name='walkinnurseledcare',
