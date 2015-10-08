@@ -10,16 +10,21 @@ controllers.controller(
         $scope.episode        = episode;
 
         $scope.test_names = {
-            blood_culture    : 'Blood Culture',
-            urine_mcs        : 'Urine MC&S',
-            wound_swab_mcs   : 'Wound swab MC&S',
-            throat_swab_mcs  : 'Throat swab MC&S',
-            stool_mcs        : 'Stool MC&S',
-            stool_ocp        : 'Stool OCP',
-            malaria_film     : 'Malaria Film',
-            full_blood_count : 'Full Blood Count',
-            biochemistry     : 'Biochemistry',
-            serum_save       : 'Serum Save'
+            blood_culture      : 'Blood Culture',
+            urine_mcs          : 'Urine MC&S',
+            wound_swab_mcs     : 'Wound swab MC&S',
+            throat_swab_mcs    : 'Throat swab MC&S',
+            stool_mcs          : 'Stool MC&S',
+            stool_ocp          : 'Stool OCP',
+            malaria_film       : 'Malaria Film',
+            full_blood_count   : 'Full Blood Count',
+            biochemistry       : 'Biochemistry',
+            serum_save         : 'Serum Save',
+            resp_pcr           : 'Respiratory Virus PCR',
+            chickengunya       : 'Chickengunya',
+            dengue             : 'Dengue',
+            parasite_id        : 'Parasite ID',
+            rickettsia_serology: 'Rickettsia Serology'
         }
         $scope.test_properties = _.invert( $scope.test_names );
             
