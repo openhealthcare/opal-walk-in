@@ -18,6 +18,40 @@ controllers.controller(
             management      : episode.management[0].makeCopy()
         };
 
+        // 
+        // Here we conduct varous QC checks on the quality of data entered
+        // Individual methods are expected to return a boolean pass/fail for
+        // that check.
+        //
+        // qc.passes() and qc.fails() are predicate that check all the QC
+        // checks at once.
+        // 
+        $scope.qc = {
+            ignore_hiv: false,
+            ignore_obs: false,
+            hiv: function(){
+                if($scope.qc.ignore_hiv){ return true };
+                hivtest = _.filter(
+                    $scope.episode.microbiology_test,
+                    function(t){return t.name="HIV Point of Care"}
+                );
+                if(hivtest == []){
+                    return false;
+                }
+                var resulted = false;
+                _.each(hivtest, function(t){ if(t.result){ resulted = true }});
+                return resulted;
+            },
+            obs: function(){
+                if($scope.qc.ignore_obs){ return true };
+                return $scope.episode.observation.length > 0;
+            },
+            passes: function(){
+                return $scope.qc.hiv() && $scope.qc.obs()
+            },
+            fails: function(){ return !$scope.qc.passes() }
+        };
+        
         if($scope.meta.management.follow_up){ $scope.meta.follow_up = true; }
 
         // Put all of our lookuplists in scope.
@@ -120,7 +154,7 @@ controllers.controller(
             if($scope.episode.management.length == 0 || !$scope.episode.management[0].makeCopy){
                 $scope.episode.management[0] = $scope.episode.newItem('management',{
                     column: $rootScope.fields.management }
-                                                                  )
+                                                                     )
             }
             var management = $scope.episode.management[0].makeCopy();
             management.results_actioned = $scope.meta.results_actioned;
@@ -207,6 +241,28 @@ controllers.controller(
                         $modalInstance.close('discharged');                        
                     })
                 });
+        };
+
+        $scope.add_some_obs = function(){
+            var deferred = $q.defer();
+            var item = $scope.episode.newItem('observation');
+            
+            $scope.episode.addItem(item);
+            
+            $modal.open({
+                templateUrl: '/templates/modals/observation.html',
+                controller: 'EditItemCtrl',
+                resolve: {
+                    item: function() { return item; },
+                    options: function() { return options; },
+                    profile: function() { return UserProfile; },
+                    episode: function() { return episode; }
+                }
+            }).result.then(
+                function(r){ deferred.resolve(r) },
+                function(r){ deferred.reject(r) }
+            );
+            $modalInstance.close(deferred.promise);
         }
 
         // Let's have a nice way to kill the modal.
