@@ -13,7 +13,7 @@
 
   <!-- Initial State Walkin triage -->
   <div ng-show="episode.tagging[0].walkin_triage == true && meta.accepted == null">
-    <p class="lead">Accept onto walk-in service?</p>
+    <p class="lead text-center">Accept onto walk-in service?</p>
     <center>
       <button class="btn btn-primary btn-lg" ng-click="meta.accepted = true">Doctor-led care</button>
       <button class="btn btn-primary btn-lg"  ng-click="meta.accepted = false">Nurse-led care</button>
