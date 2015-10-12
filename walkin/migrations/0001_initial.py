@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import opal.models.mixins
+import opal.models
 
 
 class Migration(migrations.Migration):
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.mixins.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='Findings_rash_distribution',
@@ -76,7 +76,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.mixins.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='Management_clinics',
@@ -117,7 +117,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.mixins.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='WalkinNurseLedCare',
@@ -131,7 +131,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.mixins.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='Wi_nurse_reason',

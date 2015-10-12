@@ -12,8 +12,27 @@
 <div class="modal-body">
 
   <!-- Initial State Walkin triage -->
-  <div ng-show="episode.tagging[0].walkin_triage == true && meta.accepted == null">
-    <p class="lead">Accept onto walk-in service?</p>
+  <div ng-show="episode.tagging[0].walkin_triage == true && meta.accepted == null && qc.fails()">
+    <div ng-hide="qc.hiv()">
+      <p class="lead text-center">This patient has <b>no result</b> for a HIV Point of Care Test?</p>
+      <center>
+        <button class="btn btn-primary btn-lg" ng-click="cancel()">Add result</button>
+        <button class="btn btn-secondary btn-lg"  ng-click="qc.ignore_hiv = true">Continue anyway</button>
+      </center>
+    </div>
+    <div ng-hide="qc.obs() || (qc.obs && ! qc.hiv() )">
+      <p class="lead text-center">This patient has <b>no observations</b></p>
+      <center>
+        <button class="btn btn-primary btn-lg" ng-click="add_some_obs()">{% icon "fa-plus" %}Add observations</button>
+        <button class="btn btn-secondary btn-lg"  ng-click="qc.ignore_obs = true">Continue anyway</button>
+      </center>
+    </div>
+  </div>
+  
+  
+  <!-- Walkin triage passes QC -->
+  <div ng-show="episode.tagging[0].walkin_triage == true && meta.accepted == null && qc.passes()">
+    <p class="lead text-center">Accept onto walk-in service?</p>
     <center>
       <button class="btn btn-primary btn-lg" ng-click="meta.accepted = true">Doctor-led care</button>
       <button class="btn btn-primary btn-lg"  ng-click="meta.accepted = false">Nurse-led care</button>
@@ -22,7 +41,7 @@
 
   <!-- Triage -> Doctor led care -->
   <div ng-show="episode.tagging[0].walkin_triage == true && meta.accepted == true">
-    <p class="lead">Are you sure?</p>
+    <p class="text-center lead">Are you sure?</p>
     <center>
       <button class="btn btn-primary btn-lg"  ng-click="move_to_doctor()">Move to doctor</button>
     </center>

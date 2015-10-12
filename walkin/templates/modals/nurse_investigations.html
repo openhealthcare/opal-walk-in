@@ -45,6 +45,30 @@
         {% checkbox labelwidth="4" label="Serum Save" model="investigations.serum_save" disabled="initial.serum_save" %}
       </td>
     </tr>
+    <tr>
+      <td>
+        {% checkbox labelwidth="4" label="Respiratory Virus PCR" model="investigations.resp_pcr" disabled="initial.resp_pcr" %}
+      </td>
+      <td>
+        {% checkbox labelwidth="4" label="Chickengunya" model="investigations.chickengunya" disabled="initial.chickengunya" %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {% checkbox labelwidth="4" label="Dengue" model="investigations.dengue" disabled="initial.dengue" %}
+      </td>
+      <td>
+        {% checkbox labelwidth="4" label="Parasite ID" model="investigations.parasite_id" disabled="initial.parasite_id" %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {% checkbox labelwidth="4" label="Rickettsia Serology" model="investigations.rickettsia_serology" disabled="initial.rickettsia_serology" %}
+      </td>
+      <td>
+  
+      </td>
+    </tr>
   </table>
 </form>
 {% endblock %}
