@@ -100,9 +100,11 @@ describe('WalkinNurseInvestigationsCtrl', function (){
             $scope.investigations.blood_culture = true;
             $scope.investigations.malaria_film  = true
 
-            $httpBackend.expectPOST('/api/v0.1/microbiology_test/', {test: 'Blood Culture', date_ordered: today.format('YYYY-MM-DD')})
+            $httpBackend.expectPOST('/api/v0.1/microbiology_test/', 
+                                    {test: 'Blood Culture', date_ordered: today.format('YYYY-MM-DD')})
                 .respond('yes');
-            $httpBackend.expectPOST('/api/v0.1/microbiology_test/', {test: 'Malaria Film', date_ordered: today.format('YYYY-MM-DD')})
+            $httpBackend.expectPOST('/api/v0.1/microbiology_test/', 
+                                    {test: 'Malaria Film', date_ordered: today.format('YYYY-MM-DD')})
                 .respond('yes');
 
             $scope.save();
