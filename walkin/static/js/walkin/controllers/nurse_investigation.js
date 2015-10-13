@@ -21,7 +21,7 @@ controllers.controller(
             biochemistry       : 'Biochemistry',
             serum_save         : 'Serum Save',
             resp_pcr           : 'Respiratory Virus PCR',
-            chickengunya       : 'Chickengunya',
+            chickungunya       : 'Chickungunya',
             dengue             : 'Dengue',
             parasite_id        : 'Parasite ID',
             rickettsia_serology: 'Rickettsia Serology'
