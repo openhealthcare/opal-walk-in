@@ -37,10 +37,15 @@ class Symptom(omodels.EpisodeSubrecord):
     _title = 'Symptoms'
     _icon = 'fa fa-stethoscope'
 
+    symptoms = models.ManyToManyField(omodels.Symptom, related_name="walkin_symptoms")
     symptom  = ForeignKeyOrFreeText(omodels.Symptom)
     duration = models.CharField(max_length=255, blank=True, null=True)
     details  = models.CharField(max_length=255, blank=True, null=True)
     onset    = models.CharField(max_length=255, blank=True, null=True)
+
+    def set_symptom(self, *args, **kwargs):
+        # ignore symptom for the time being
+        pass
 
 
 class ClinicalFindings(omodels.EpisodeSubrecord):
