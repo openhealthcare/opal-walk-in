@@ -1,3 +1,10 @@
+### 0.2.1 Release
+
+Symptoms is becoming a many to many relationship so a user can add in many symptoms
+in a single field. There's a fix for some boolean logic that was leaking into other packages
+in the episode detail view.
+
+
 ### 0.2 Release
 
 Allows discharge summary letters to be re-generated from details pages.
