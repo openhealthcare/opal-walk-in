@@ -43,6 +43,13 @@ class Symptom(omodels.EpisodeSubrecord):
     details  = models.CharField(max_length=255, blank=True, null=True)
     onset    = models.CharField(max_length=255, blank=True, null=True)
 
+    @classmethod
+    def _get_fieldnames_to_serialize(cls):
+        field_names = super(Symptom, cls)._get_fieldnames_to_serialize()
+        removed_fields = {u'symptom_fk_id', 'symptom_ft', 'symptom'}
+        field_names = [i for i in field_names if i not in removed_fields]
+        return field_names
+
     def set_symptom(self, *args, **kwargs):
         # ignore symptom for the time being
         pass
