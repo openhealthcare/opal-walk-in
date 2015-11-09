@@ -38,15 +38,17 @@ class Symptom(omodels.EpisodeSubrecord):
     _icon = 'fa fa-stethoscope'
 
     symptoms = models.ManyToManyField(omodels.Symptom, related_name="walkin_symptoms")
-    symptom  = ForeignKeyOrFreeText(omodels.Symptom)
     duration = models.CharField(max_length=255, blank=True, null=True)
-    details  = models.CharField(max_length=255, blank=True, null=True)
-    onset    = models.CharField(max_length=255, blank=True, null=True)
+    details = models.TextField(blank=True, null=True)
+
+    # deprecated fields 9/11/2015
+    onset = models.CharField(max_length=255, blank=True, null=True)
+    symptom = ForeignKeyOrFreeText(omodels.Symptom)
 
     @classmethod
     def _get_fieldnames_to_serialize(cls):
         field_names = super(Symptom, cls)._get_fieldnames_to_serialize()
-        removed_fields = {u'symptom_fk_id', 'symptom_ft', 'symptom'}
+        removed_fields = {u'symptom_fk_id', 'symptom_ft', 'symptom', 'onset'}
         field_names = [i for i in field_names if i not in removed_fields]
         return field_names
 
