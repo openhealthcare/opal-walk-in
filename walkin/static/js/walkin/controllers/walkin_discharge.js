@@ -4,10 +4,9 @@
 controllers.controller(
     'WalkinDischargeCtrl',
     function($scope, $modalInstance, $modal, $rootScope, $q,
-             $modal,
-             growl,
-             Item, CopyToCategory, UserProfile,
-             options, episode, tags){
+             growl, Item, CopyToCategory, UserProfile, options, episode, tags){
+
+        "use strict";
 
         $scope.episode = episode;
         $scope.meta = {
@@ -18,14 +17,14 @@ controllers.controller(
             management      : episode.management[0].makeCopy()
         };
 
-        // 
+        //
         // Here we conduct varous QC checks on the quality of data entered
         // Individual methods are expected to return a boolean pass/fail for
         // that check.
         //
         // qc.passes() and qc.fails() are predicate that check all the QC
         // checks at once.
-        // 
+        //
         $scope.qc = {
             ignore_hiv: false,
             ignore_obs: false,
@@ -51,7 +50,7 @@ controllers.controller(
             },
             fails: function(){ return !$scope.qc.passes() }
         };
-        
+
         if($scope.meta.management.follow_up){ $scope.meta.follow_up = true; }
 
         // Put all of our lookuplists in scope.
@@ -59,7 +58,7 @@ controllers.controller(
             if (name.indexOf('micro_test') != 0) {
                 $scope[name + '_list'] = options[name];
             };
-        };        
+        };
 
         // Make sure that the episode's tagging item is an instance not an object
         $scope.ensure_tagging = function(episode){
@@ -71,7 +70,7 @@ controllers.controller(
             return
         };
 
-        // 
+        //
         // We have entered the follow up information - save this in
         // Walk-in Management and then set the "follow up" variable.
         //
@@ -81,8 +80,8 @@ controllers.controller(
                     $scope.meta.follow_up = 'saved';
                 }
             );
-        }        
-        
+        }
+
         $scope.move_to_doctor = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
@@ -95,14 +94,14 @@ controllers.controller(
             });
         }
 
-        // 
+        //
         // The doctor has finished seeing this patient - but there remain
         // some outstanding test results that they would like to review.
         //
         // * Tag the patient to the review list
         // * Set the discharge date on the Episode
         // * Close the modal and inform the user
-        // 
+        //
         $scope.move_to_review = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
@@ -112,7 +111,7 @@ controllers.controller(
             var ep = $scope.episode.makeCopy();
             ep.discharge_date = new Date();
 
-            $scope.episode.save(ep).then(function(){                
+            $scope.episode.save(ep).then(function(){
                 $scope.episode.tagging[0].save(tagging).then(function(){
                     growl.success('Moved to Review list')
                     $modalInstance.close('discharged');
@@ -120,20 +119,20 @@ controllers.controller(
             });
         }
 
-        // 
+        //
         // The nurse has cared for this patient and is sending them home.
         //
         // Save the nursing care metadata, the date of discharge, de-tag
         // the patient, and then open a discharge summary window for the
         // nurse to copy the episode summary.
-        // 
+        //
         $scope.nurse_led_care = function(){
             var nursing = $scope.episode.newItem('walkin_nurse_led_care');
 
             var ep = $scope.episode.makeCopy();
             ep.discharge_date = new Date();
-            
-            to_save = [
+
+            var to_save = [
                 nursing.save({
                     reason:    $scope.meta.nurse_reason,
                     treatment: $scope.meta.treatment
@@ -143,7 +142,7 @@ controllers.controller(
                 var diagnosis = $scope.episode.newItem('diagnosis');
                 to_save.push(diagnosis.save({condition: $scope.meta.diagnosis}));
             }
-            
+
             $scope.ensure_tagging($scope.episode);
 
             var tagging = $scope.episode.tagging[0].makeCopy();
@@ -162,38 +161,34 @@ controllers.controller(
             to_save.push($scope.episode.tagging[0].save(tagging));
 
             $scope.episode.save(ep).then(function(resp){
-                console.log(resp)
                 $q.all(to_save).then(function(){
-                    growl.success('Removed from Walk-in lists')
+                    growl.success('Removed from Walk-in lists');
                     var deferred = $q.defer();
-                    $rootScope.open_modal(
-                        'ModalDischargeSummaryCtrl',
-                        '/dischargesummary/modals/walkinnurse/',
-                        'lg',
-                        {episode: episode}
-                    ).result.then(
-                        function(r){ deferred.resolve('discharged') },
-                        function(r){ deferred.reject('discharged') }
-                    );
+                    var modal = $modal.open({
+                        templateUrl: '/dischargesummary/modals/walkinnurse/',
+                        controller: 'ModalDischargeSummaryCtrl',
+                        size: 'lg',
+                        resolve: {episode: episode}
+                    });
                     $modalInstance.close(deferred.promise);
                 });
-            })
-        }
+            });
+        };
 
-        // 
+        //
         // The appointment has finished with no further follow up.
         //
         // Untag this episode
         // Set the discharge date if one does not exist
         // Close the modal and inform the user
-        // 
+        //
         $scope.remove_from_list = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
             tagging.walkin_triage = false;
             tagging.walkin_doctor = false;
             tagging.walkin_review = false;
-            
+
             var to_save = [
                 $scope.episode.tagging[0].save(tagging)
             ]
@@ -201,7 +196,7 @@ controllers.controller(
             if(!episode.discharge_date){
                 var ep = $scope.episode.makeCopy();
                 ep.discharge_date = new Date();
-                to_save.push($scope.episode.save(ep));            
+                to_save.push($scope.episode.save(ep));
             }
 
             $q.all(to_save).then(function(){
@@ -209,13 +204,13 @@ controllers.controller(
                 $modalInstance.close('discharged');
             });
         }
-        
-        // 
+
+        //
         // Copy this episode to a new inpatient episode.
         //
         // Untag this episode.
         // Tag the new episode to the selected team
-        // 
+        //
         $scope.admit_to_ward = function(){
             $scope.ensure_tagging($scope.episode);
             var tagging = $scope.episode.tagging[0].makeCopy();
@@ -230,7 +225,7 @@ controllers.controller(
                     newtags[$scope.meta.target_team] = true;
                     var ep = $scope.episode.makeCopy();
                     ep.discharge_date = new Date();
-                    $q.all([                        
+                    $q.all([
                         $scope.episode.tagging[0].save(tagging),
                         $scope.episode.save(ep),
                         newtagging.save(newtags),
@@ -238,7 +233,7 @@ controllers.controller(
                     ]).then(function(){
                         var msg = 'Admitted to ' + $scope.meta.target_team + ' ward';
                         growl.success(msg);
-                        $modalInstance.close('discharged');                        
+                        $modalInstance.close('discharged');
                     })
                 });
         };
@@ -246,9 +241,9 @@ controllers.controller(
         $scope.add_some_obs = function(){
             var deferred = $q.defer();
             var item = $scope.episode.newItem('observation');
-            
+
             $scope.episode.addItem(item);
-            
+
             $modal.open({
                 templateUrl: '/templates/modals/observation.html',
                 controller: 'EditItemCtrl',
