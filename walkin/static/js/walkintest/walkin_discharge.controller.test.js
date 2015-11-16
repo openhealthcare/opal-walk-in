@@ -2,8 +2,7 @@ describe('WalkinDischargeCtrl', function(){
     "use strict";
 
     var $controller, $scope, $modalInstance, $httpBackend, $rootScope, $modal, $q, growl;
-    var Episode;
-    var options, episode, tags;
+    var Episode, options, episode, tags;
     var today = new Date();
     var today_string = moment(today).format('YYYY-MM-DD');
 
@@ -20,6 +19,7 @@ describe('WalkinDischargeCtrl', function(){
         $q           = $injector.get('$q');
 
         $modalInstance = $modal.open({template: 'Not a real template'});
+        spyOn($modal, 'open').and.returnValue({});
         tags = {};
 
         $rootScope.fields = {

@@ -2,7 +2,7 @@ describe('WalkinNurseInvestigationsCtrl', function (){
     "use strict";
 
     var $controller, $scope, $modalInstance, $httpBackend, $rootScope, episode;
-    var today, Episode;
+    var today, Episode, controller;
 
     beforeEach(module('opal.controllers'));
 
@@ -29,7 +29,7 @@ describe('WalkinNurseInvestigationsCtrl', function (){
             }
         }
 
-        var controller = $controller('WalkinNurseInvestigationsCtrl', {
+        controller = $controller('WalkinNurseInvestigationsCtrl', {
             $scope         : $scope,
             $modalInstance : $modalInstance,
             episode        : episode
