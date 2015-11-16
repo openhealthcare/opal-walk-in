@@ -35,7 +35,7 @@ describe('WalkinHospitalNumberCtrl', function (){
             }
         }
 
-        controller = $controller('WalkinHospitalNumberCtrl', {
+        var controller = $controller('WalkinHospitalNumberCtrl', {
             $scope         : $scope,
             $modalInstance : $modalInstance,
             schema         : schema,
