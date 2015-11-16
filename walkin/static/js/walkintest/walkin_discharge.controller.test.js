@@ -1,4 +1,6 @@
 describe('WalkinDischargeCtrl', function(){
+    "use strict";
+
     var $controller, $scope, $modalInstance, $httpBackend, $rootScope, $modal, $q, growl;
     var Episode;
     var options, episode, tags;
@@ -8,7 +10,7 @@ describe('WalkinDischargeCtrl', function(){
     beforeEach(module('opal.controllers'));
 
     beforeEach(inject(function($injector){
-        
+
         $rootScope   = $injector.get('$rootScope');
         $scope       = $rootScope.$new();
         $modal       = $injector.get('$modal');
@@ -18,17 +20,9 @@ describe('WalkinDischargeCtrl', function(){
         $q           = $injector.get('$q');
 
         $modalInstance = $modal.open({template: 'Not a real template'});
-        schema = {};
         tags = {};
-        
+
         $rootScope.fields = {
-            'management': {
-                name: 'management',
-                single: false,
-                fields : [
-                    { name: 'date_of_appointment', type: 'date' }
-                ]
-            },
             'walkin_nurse_led_care': {
                 name:  'walkin_nurse_led_care',
                 single: false,
@@ -44,7 +38,7 @@ describe('WalkinDischargeCtrl', function(){
                     { name: 'walkin', type: 'boolean' },
                     { name: 'walkin_triage', type: 'boolean' },
                     { name: 'walkin_doctor', type: 'boolean' },
-                    { name: 'walkin_review', type: 'boolean' }                    
+                    { name: 'walkin_review', type: 'boolean' }
                 ]
             },
             "management": {
@@ -93,10 +87,10 @@ describe('WalkinDischargeCtrl', function(){
         }
 
         growl = {success: jasmine.createSpy('growl.success')};
-        
+
         episode = new Episode({id: 555, management: [{}], tagging: [{}] });
 
-        controller = $controller('WalkinDischargeCtrl', {
+        var controller = $controller('WalkinDischargeCtrl', {
             $scope         : $scope,
             $modalInstance : $modalInstance,
             growl          : growl,
@@ -112,13 +106,13 @@ describe('WalkinDischargeCtrl', function(){
     });
 
     describe('move_to_review()', function (){
-        
+
         beforeEach(function(){
             $httpBackend.expectGET('/api/v0.1/userprofile/').respond({});
             $httpBackend.expectPUT(
                 '/episode/555/',
                 {id: 555, discharge_date: today_string }).respond({});
-            spyOn($modalInstance, 'close');            
+            spyOn($modalInstance, 'close');
         });
 
         it('Should set a discharge date', function () {
@@ -155,21 +149,21 @@ describe('WalkinDischargeCtrl', function(){
             $scope.$digest(); // Fire actual resolving
         });
 
-        
+
     });
-    
+
     describe('nurse_led_care()', function (){
-        
+
         beforeEach(function(){
             $httpBackend.expectGET('/api/v0.1/userprofile/').respond({});
-            $httpBackend.expectPUT(
-                '/episode/555/',
-                {id: 555, discharge_date: today_string }).respond({});
             $httpBackend.expectPOST('/api/v0.1/walkin_nurse_led_care/').respond({});
             $httpBackend.expectPOST('/api/v0.1/management/').respond({});
             $httpBackend.expectPUT('/api/v0.1/tagging/555/').respond({});
+            $httpBackend.expectPUT(
+                '/episode/555/',
+                {id: 555, discharge_date: today_string }).respond({});
         });
-        
+
         it('Should save the discharge date', function () {
             episode.tagging = [{walkin_triage: true, walkin: true}];
             $scope.nurse_led_care();
@@ -178,7 +172,7 @@ describe('WalkinDischargeCtrl', function(){
             // $httpBackend expectation above
         });
     });
-    
+
     describe('remove_from_list()', function (){
 
         beforeEach(function(){
@@ -220,7 +214,7 @@ describe('WalkinDischargeCtrl', function(){
             $scope.$digest(); // Fire actual resolving
             expect($modalInstance.close).toHaveBeenCalled();
         });
-        
+
     });
 
     describe('admit_to_ward()', function (){
@@ -248,5 +242,5 @@ describe('WalkinDischargeCtrl', function(){
         });
 
     });
-    
+
 });
