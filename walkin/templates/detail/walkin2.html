@@ -1,0 +1,31 @@
+{% load panels %}
+<div class="col-md-12">
+  <div class="panel panel-active">
+    <div class="panel-heading text-center">
+      <h3>
+        Walkin clinic
+        [[ episode.location[0].date_of_admission | shortDate]]
+      </h3>
+    </div>
+    <div class="panel-body">
+      <center>
+        {% include 'actions/walkin_next.html' %}
+      </center>
+    </div>
+  </div>
+</div>
+<div class="col-md-6"> <!-- Detail panels col 1 -->
+  {% record_panel models.Travel %}
+  {% record_panel models.Allergies %}
+  {% include 'obs/detail_panel.html' %}
+</div>                 <!-- Ends Detail panels col 1 -->
+<div class="col-md-6"> <!-- Detail panels col 2 -->
+  {% record_panel models.Symptom %}
+  {% record_panel models.ClinicalFindings %}
+  {% record_panel models.Diagnosis %}
+  {% record_panel models.Antimicrobial %}
+  {% record_panel models.MicrobiologyTest %}
+  {% record_panel models.WalkinNurseLedCare %}
+  {% record_panel models.Management %}
+  {% record_panel models.MicrobiologyInput %}
+</div>
