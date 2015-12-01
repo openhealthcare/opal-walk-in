@@ -4,7 +4,7 @@ describe('WalkinDischargeCtrl', function(){
     var $controller, $scope, $modalInstance, $httpBackend, $rootScope, $modal, $q, growl;
     var Episode, options, episode, tags;
     var today = new Date();
-    var today_string = moment(today).format('YYYY-MM-DD');
+    var today_string = moment(today).format('DD/MM/YYYY');
 
     beforeEach(module('opal.controllers'));
 

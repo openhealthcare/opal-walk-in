@@ -23,12 +23,12 @@ controllers.controller(
             var ep = episode.makeCopy();
             ep.category = 'Walkin';
             ep.date_of_episode = moment();
-            
+
             //
             // Pre fill some tests:
             //
             var hiv = episode.newItem('microbiology_test');
-                                      
+
             $q.all([
                 episode.save(ep),
                 hiv.save({test: 'HIV Point of Care'}),
@@ -102,7 +102,7 @@ controllers.controller(
                         alert('Warning - Patient is a current inpatient');
                     }else if(e.category == 'Walkin'){
                         var episode = new Episode(e);
-                        
+
                         if(episode.getTags().length > 1){
                             if(episode.hasTag('walkin_doctor')){
                                 alert('Patient is currently on the Walkin Doctor list');
@@ -111,7 +111,7 @@ controllers.controller(
                                 return
                             }
                             if(episode.hasTag('walkin_triage')){
-                                alert('Patient is currently on the Walkin Nurse list');                                
+                                alert('Patient is currently on the Walkin Nurse list');
                                 die = true;
                                 $scope.cancel();
                                 return
@@ -121,7 +121,7 @@ controllers.controller(
                                 if(tags.subtag == 'walkin_review'){
                                     alert('Patient is currently on the Walkin Review list');
                                     console.log('already here');
-                                    $scope.cancel();                                    
+                                    $scope.cancel();
                                 } else {
                                     alert('Patient is currently on the Walkin Review list. Moving them here.');
                                     var tagging = episode.tagging[0].makeCopy();
@@ -148,11 +148,7 @@ controllers.controller(
         //
         $scope.add_for_patient = function(patient){
             var demographics = patient.demographics[0];
-            if(demographics.date_of_birth){
-                var dob = moment(demographics.date_of_birth, 'YYYY-MM-DD')
-                    .format('DD/MM/YYYY');
-                demographics.date_of_birth = dob;
-            }
+
             modal = $modal.open({
                 templateUrl: '/templates/modals/add_walkin_episode.html/',
                 controller: 'AddEpisodeCtrl',

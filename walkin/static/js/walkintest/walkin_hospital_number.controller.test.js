@@ -55,7 +55,7 @@ describe('WalkinHospitalNumberCtrl', function (){
         it('Should save and close', function () {
             var episode  = {
                 id: '3',
-                date_of_episode: moment().format('YYYY-MM-DD'),
+                date_of_episode: moment().format('DD/MM/YYYY'),
                 category: 'Walkin'
             };
             $httpBackend.expectPUT('/episode/3/', episode).respond(episode);
