@@ -1,24 +1,22 @@
-
 describe('WalkinHospitalNumberCtrl', function (){
+    "use strict";
     var $controller, $scope, $modalInstance, $httpBackend, $rootScope;
     var schema, options, tags, Episode;
 
     beforeEach(module('opal.controllers'));
 
     beforeEach(inject(function($injector){
-        today = moment();
-        
+        var $modal   = $injector.get('$modal');
         $rootScope   = $injector.get('$rootScope');
         $scope       = $rootScope.$new();
         $controller  = $injector.get('$controller');
-        $modal       = $injector.get('$modal');
         Episode      = $injector.get('Episode');
         $httpBackend = $injector.get('$httpBackend');
 
         $modalInstance = $modal.open({template: 'Not a real template'})
         schema = {}
         options = {}
-        
+
         $rootScope.fields = {
             'microbiology_test': {
                 name: 'microbiology_test',
@@ -36,8 +34,8 @@ describe('WalkinHospitalNumberCtrl', function (){
                 ]
             }
         }
-        
-        controller = $controller('WalkinHospitalNumberCtrl', {
+
+        var controller = $controller('WalkinHospitalNumberCtrl', {
             $scope         : $scope,
             $modalInstance : $modalInstance,
             schema         : schema,
@@ -51,7 +49,7 @@ describe('WalkinHospitalNumberCtrl', function (){
         $httpBackend.verifyNoOutstandingRequest();
     });
 
-    
+
     describe('tag_and_close()', function (){
 
         it('Should save and close', function () {
@@ -67,14 +65,14 @@ describe('WalkinHospitalNumberCtrl', function (){
             var episode = {id: '3'};
 
             spyOn($modalInstance, 'close');
-            
+
             $scope.tag_and_close(episode);
             $httpBackend.flush();
 
             expect($modalInstance.close).toHaveBeenCalled();
         });
-        
+
     });
 
-    
+
 });
