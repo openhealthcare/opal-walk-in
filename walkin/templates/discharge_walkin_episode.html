@@ -28,8 +28,8 @@
       </center>
     </div>
   </div>
-  
-  
+
+
   <!-- Walkin triage passes QC -->
   <div ng-show="episode.tagging[0].walkin_triage == true && meta.accepted == null && qc.passes()">
     <p class="lead text-center">Accept onto walk-in service?</p>
@@ -85,8 +85,8 @@
       {% radio label="Follow-up" model="meta.management.follow_up" lookuplist="['Discharged from clinic: No Follow-Up', 'Discharged from clinic: Follow-Up in clinic']"%}
 
       <div ng-show="meta.management.follow_up == 'Discharged from clinic: Follow-Up in clinic'">
-      {% input model="meta.management.follow_up_clinic" label="Follow-up clinic" lookuplist="management_clinics_list" %}
-      {% datepicker model="meta.management.date_of_appointment" label="Date of appointment" %}
+        {% input model="meta.management.follow_up_clinic" label="Follow-up clinic" lookuplist="management_clinics_list" %}
+        {% datepicker model="meta.management.date_of_appointment" label="Date of appointment" %}
       </div>
     </form>
     <center>
@@ -99,6 +99,7 @@
 
   <!-- Review, has management -> remove from list  -->
   <div ng-show="episode.tagging[0].walkin_doctor == true && meta.next == 'review' && meta.follow_up != null">
+
     <p class="lead">Move [[ episode.demographics[0].name ]] to review?</p>
     <center>
       <button class="btn btn-primary btn-lg"  ng-click="move_to_review()">Move to review</button>
@@ -132,14 +133,24 @@
 
   <!-- Initial state for Results actioned -->
   <div ng-show="episode.tagging[0].walkin_review == true && meta.results_actioned == null">
-    <p class="lead text-center">
-      Are all results for [[ episode.demographics[0].name ]] actioned and/or patient has appropriate follow up ? 
-    </p>
-    <center>
-      <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">
-        <i class="fa fa-remove"></i> Remove from list
-      </button>
-    </center>
+    <!-- make sure diagnosis has been added -->
+    <div ng-show="!episode.diagnosis.length && !qc.ignore_diagnosis">
+      <p class="lead text-center">This patient has <b>no diagnosis</b>?</p>
+      <center>
+        <button class="btn btn-primary btn-lg" ng-click="cancel()">Add a diagnosis</button>
+        <button class="btn btn-secondary btn-lg"  ng-click="qc.ignore_diagnosis = true">Continue anyway</button>
+      </center>
+    </div>
+    <div ng-hide="!episode.diagnosis.length && !qc.ignore_diagnosis">
+      <p class="lead text-center">
+        Are all results for [[ episode.demographics[0].name ]] actioned and/or patient has appropriate follow up ?
+      </p>
+      <center>
+        <button class="btn btn-primary btn-lg"  ng-click="remove_from_list()">
+          <i class="fa fa-remove"></i> Remove from list
+        </button>
+      </center>
+    </div>
   </div>
 
   <div class="modal-footer">
