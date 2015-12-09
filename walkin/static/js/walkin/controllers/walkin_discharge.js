@@ -30,7 +30,7 @@ controllers.controller(
             ignore_obs: false,
             hiv: function(){
                 if($scope.qc.ignore_hiv){ return true };
-                hivtest = _.filter(
+                var hivtest = _.filter(
                     $scope.episode.microbiology_test,
                     function(t){return t.name="HIV Point of Care"}
                 );
