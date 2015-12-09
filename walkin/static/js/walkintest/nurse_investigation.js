@@ -104,8 +104,11 @@ describe('WalkinNurseInvestigationsCtrl', function (){
                                     {test: 'Malaria Film', date_ordered: today.format('YYYY-MM-DD')})
                 .respond('yes');
 
+            expect($scope.saving).toBe(false);
             $scope.save();
+            expect($scope.saving).toBe(true);
             $httpBackend.flush();
+            expect($scope.saving).toBe(false);
         });
 
         it('Should close the modal', function () {
@@ -114,7 +117,6 @@ describe('WalkinNurseInvestigationsCtrl', function (){
             expect($modalInstance.close).toHaveBeenCalled();
         });
     });
-
 
     describe('cancel()', function (){
         it('Should close the modal', function () {
