@@ -13,18 +13,20 @@
 <p><b>Travel:</b></p>
 <p ng-repeat="travel in episode.travel">
   [[ travel.destination ]] - [[ travel.dates ]]
+  <span ng-show="travel.specific_exposures">(specific exposures: [[ travel.specific_exposures ]])
+  </span>
 </p>
 
 
 <p><b>Presenting complaint:</b></p>
 <p>
-  The patient reported a 
+  The patient reported a
   <span ng-show="episode.symptom[0].duration == '3 days or less' || episode.symptom[0] == '4-10 days'">short</span>
   <span ng-show="episode.symptom[0].duration == '11-21 days' || episode.symptom[0] == '22 days to 3 months'">sub-acute</span>
   <span ng-show="episode.symptom[0].duration == 'over 3 months'">long</span>
   history of [[ episode.symptom[0].symptom ]]
 </p>
-</p>
+<p>
  <b>On examination:</b>
 </p>
 <p>
