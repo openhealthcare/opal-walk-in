@@ -28,6 +28,7 @@ controllers.controller(
         $scope.qc = {
             ignore_hiv: false,
             ignore_obs: false,
+            ignore_diagnosis: false,
             hiv: function(){
                 if($scope.qc.ignore_hiv){ return true };
                 var hivtest = _.filter(
