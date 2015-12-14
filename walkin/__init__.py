@@ -1,7 +1,7 @@
 """
 Plugin definition
 """
-from opal.core import plugins
+from opal.core import plugins, episodes
 
 from walkin.urls import urlpatterns
 
@@ -21,3 +21,7 @@ class WalkinPlugin(plugins.OpalPlugin):
     ]
 
 plugins.register(WalkinPlugin)
+
+class WalkinEpisode(episodes.EpisodeType):
+    name = 'Walkin'
+    detail_template = 'detail/walkin2.html'

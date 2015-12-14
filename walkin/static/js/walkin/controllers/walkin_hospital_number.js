@@ -4,7 +4,7 @@
 controllers.controller(
     'WalkinHospitalNumberCtrl',
     function($scope, $modalInstance, $modal, $rootScope, $q,
-             tags, schema, options,
+             tags, options,
              Episode){
 
         $scope.model = {
@@ -69,7 +69,6 @@ controllers.controller(
                 templateUrl: '/templates/modals/add_walkin_episode.html/',
                 controller: 'AddEpisodeCtrl',
                 resolve: {
-                    schema: function() { return schema; },
                     options: function() { return options; },
                     demographics: function() {
                         return { hospital_number: $scope.model.hospitalNumber }
@@ -157,7 +156,6 @@ controllers.controller(
                 templateUrl: '/templates/modals/add_walkin_episode.html/',
                 controller: 'AddEpisodeCtrl',
                 resolve: {
-                    schema: function() { return schema; },
                     options: function() { return options; },
                     demographics: function() { return demographics; }
                 }
