@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='opal-walk-in',
-    version='v0.2.2',
+    version='v0.3.0',
     packages=['walkin'],
     include_package_data=True,
     license='GPL3',
