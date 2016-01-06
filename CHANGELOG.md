@@ -1,3 +1,10 @@
+### 0.2.2 Release
+
+Make sure a diagnosis has been entered
+add clinical investigations and travel specific exposures to the discharge letter
+disable the save button while we're saving
+
+
 ### 0.2.1 Release
 
 Symptoms is becoming a many to many relationship so a user can add in many symptoms
