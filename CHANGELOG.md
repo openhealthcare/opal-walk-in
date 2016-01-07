@@ -1,4 +1,4 @@
-### 0.2.2 Release
+### 0.2.3 Release
 
 Make sure a diagnosis has been entered
 add clinical investigations and travel specific exposures to the discharge letter
