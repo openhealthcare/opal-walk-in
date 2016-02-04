@@ -107,5 +107,6 @@ class ZikaPathway(omodels.EpisodeSubrecord):
     due_date           = models.DateField(blank=True, null=True)
     antenatal_hospital = models.CharField(max_length=255, blank=True, null=True)
     yellow_fever       = models.CharField(max_length=255, blank=True, null=True)
+    date_leaving       = models.DateField(blank=True, null=True)
     advice             = models.TextField(blank=True, null=True)
     follow_up          = models.TextField(blank=True, null=True)
