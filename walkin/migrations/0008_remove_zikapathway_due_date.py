@@ -11,9 +11,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.RemoveField(
             model_name='zikapathway',
             name='due_date',
-            field=models.DateField(null=True, blank=True),
         ),
     ]
