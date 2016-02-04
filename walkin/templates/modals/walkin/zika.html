@@ -22,11 +22,12 @@
   </div>
   {% checkbox label="Blood ZIKA PCR" model="editing.tests.blood_zika_pcr" help_text="Only if symptomatic" %}
   {% checkbox label="Urine ZIKA PCR" model="editing.tests.urine_pcr" help_text="If <3 weeks (and only if classical symptoms of ZIKA see algorithm.)" %}
-  {% checkbox label="Dengue and Chikungunya serology and PCR" model="editing.tests.dengue_chik" help_text="On patients with symptoms" %}
+  {% checkbox label="Dengue serology" model="editing.tests.dengue_serology" help_text="On patients with symptoms" %}
+  {% checkbox label="Dengue PCR" model="editing.tests.dengue_pcr" help_text="On patients with symptoms" %}
+  {% checkbox label="Chikungunya serology" model="editing.tests.chik_serology" help_text="On patients with symptoms" %}
+  {% checkbox label="Chikungunya PCR" model="editing.tests.chik_pcr" help_text="On patients with symptoms" %}
 
-
-
-
+{% textarea label="Clinical Advice" model="editing.zika.advice" help_text="Remember counsel about utility of tests, false negatives etc."%}
 
 {% textarea label="Follow Up" model="editing.zika.follow_up" help_text="Bring back to a consultant clinic 2 weeks after tests sent. If no tests sent apart from serum-save advise follow up in local obstetric department and we will keep details so that if more tests become available we can get in touch"%}
 
