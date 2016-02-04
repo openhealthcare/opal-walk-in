@@ -11,7 +11,7 @@ controllers.controller(
             blood_zika_pcr : 'Blood ZIKA PCR',
             urine_pcr      : 'Urine ZIKA PCR',
             dengue_serology: 'Dengue serology',
-            dengue_pcr     : 'dengue PCR',
+            dengue_pcr     : 'Dengue PCR',
             chik_serology  : 'Chikungunya serology',
             chik_pcr       : 'Chikungunya PCR',
             dengue_chik    : 'Dengue and Chikungunya serology and PCR'
