@@ -7,13 +7,14 @@
   This patient was seen in the Hospital for Tropical Diseases Emergency Clinic due to concern about
   possible exposure to the ZIKA virus.
 </p>
-<p>Recent travel to:</p>
+<p><b>Recent travel to:</b></p>
 <p ng-repeat="travel in episode.travel">
   [[ travel.destination ]] - [[ travel.dates ]]
   <span ng-show="travel.specific_exposures">(specific exposures: [[ travel.specific_exposures ]])
   </span>
 </p>
 
+<p ng-hide="episode.zika_pathway[0].pregnant">Not pregnant.</p>
 <div ng-show="episode.zika_pathway[0].pregnant">
 <p>
   Pregnant

@@ -6,7 +6,7 @@
 <form class="form-horizontal">
   {% checkbox label="Pregnant" model="editing.zika.pregnant" help_text="If < 12 weeks- confirm with pregnancy test at HTD" %}
   <span ng-show="editing.zika.pregnant">
-  {% input label="Weeks gestation" model="editing.zika.gestation" %}
+  {% input label="Weeks gestation at exposure" model="editing.zika.gestation" %}
   {% datepicker label="Estimated due date" model="editing.zika.due_date" %}
   {% input label="Antenatal Hospital" model="editing.zika.antenatal_hospital" %}
   </span>
