@@ -9,7 +9,7 @@ controllers.controller(
         $scope.episode = episode;
         $scope.test_names = {
             blood_zika_pcr: 'Blood ZIKA PCR',
-            urine_pcr     : 'Urine PCR',
+            urine_pcr     : 'Urine ZIKA PCR',
             dengue_chik   : 'Dengue and Chikungunya serology and PCR'
         }
         $scope.test_properties = _.invert( $scope.test_names );
