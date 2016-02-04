@@ -14,19 +14,19 @@
   </span>
 </p>
 
+<div ng-show="episode.zika_pathway[0].pregnant">
 <p>
-  Type of accommodation
+  Pregnant
+  <br />
+  [[ episode.zika_pathway[0].gestation ]] weeks gestation at exposure
+  <br />
+  Estimated due date:   [[ episode.zika_pathway[0].due_date ]]
+  <br />
+  Hospital where booked for antenatal care:   [[ episode.zika_pathway[0].antenatal_hospital ]]
 </p>
-
-<p>
-  Pregnant- Yes/No
-  (If <12 weeks- confirm with pregnancy test at HTD)
-          No.of weeks gestation at exposure
-          Estimated due date
-          Hospital where booked for antenatal care
-
-          History of yellow fever vaccine?
-</p>
+</div>
+Yellow fever vaccine <span ng-show="episode.zika_pathway[0].yellow_fever">[[episode.zika_pathway[0].yellow_fever]]</span>
+<span ng-hide="episode.zika_pathway[0].yellow_fever">Not Vaccinated</span>
 
 <p><b>Presenting symptoms:</b></p>
 <p ng-repeat="walkinSymptom in episode.symptom">
@@ -38,19 +38,22 @@
   <span ng-repeat="symptom in walkinSymptom.symptoms">[[ symptom.toLowerCase() ]][[ $last ? '' : $index + 2 === episode.symptom[0].symptoms.length ? ' and ' : ', ']]</span>
 </p>
 
-<p><b>Clinical Impression:</b></p>
 
+<p><b>Investigations sent:</b></p>
+<div class="content-offset-below-10 zero-padded-list" ng-repeat="item in episode.microbiology_test">
+  {% include 'records/microbiology_test.html' %}
+</div>
 
-Investigations sent-
-Remember- Serum save in all patients.
-If sending any virology fill in dedicated form which includes the additional travel exposure questions. Try to put all samples in one bag.
-Blood ZIKA PCR (only if symptomatic)
-Urine PCR (if <3 weeks (and only if classical symptoms of ZIKA see algorithm.)
-Dengue and Chikungunya serology and PCR (on patients with symptoms)
+<div ng-show="episode.microbiology_input && episode.microbiology_input.length > 0">
+  <p>
+    <b>Advice Given:</b>
+  </p>
+  <p ng-repeat="ca in episode.microbiology_input">
+    [[ ca.clinical_discussion ]]
+  </p>
+</div>
 
-Advice given
-(remember counsel about utility of tests, false negatives etc.)
-
-Follow up arrangements:
-(Bring back to a consultant clinic 2 weeks after tests sent)
-(If no tests sent apart from serum-save advise follow up in local obstetric department and we will keep details so that if more tests become available we can get in touch)
+<p><b>Follow up arrangements:</b></p>
+<p>
+  [[ episode.zika_pathway[0].follow_up ]]
+</p>
