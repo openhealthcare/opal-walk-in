@@ -1,3 +1,10 @@
+## ! Important Notice !
+
+This Plugin is unmaintained and significantly outdated.
+
+Refer to the http://opal.openhealthcare.org.uk documentation for current information about Opal
+
+
 # Opal Walk-in
 
 Walk-in plugin for OPAL
